@@ -53,11 +53,20 @@ public class BookServlet extends HttpServlet {
 	public void VerifyUser(HttpServletRequest request, HttpServletResponse response) {
 		DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(df.build());
-		root.put("name", request.getParameter("name"));
-		root.put("address", request.getParameter("address"));
+		root.put("firstname", request.getParameter("firstname"));
+		root.put("lastname", request.getParameter("lastname"));
+		root.put("month", request.getParameter("DOBMonth"));
+		root.put("day", request.getParameter("DOBDay"));
+		root.put("year", request.getParameter("DOBYear"));
+		root.put("gender", request.getParameter("gender"));
+		root.put("street", request.getParameter("street"));
+		root.put("city", request.getParameter("city"));
+		root.put("state", request.getParameter("state"));
+		root.put("zip", request.getParameter("zip"));
 		root.put("username", request.getParameter("username"));
+		root.put("password", request.getParameter("password"));
 		root.put("email", request.getParameter("email"));
-		root.put("birthday", request.getParameter("birthday"));
+		root.put("phone", request.getParameter("phone"));		
 		String templateName = "code.ftl";
 		process.processTemplate(templateName, root, request, response);
 	}

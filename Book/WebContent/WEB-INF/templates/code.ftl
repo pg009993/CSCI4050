@@ -14,11 +14,13 @@
   	<button class="button" name="resend">Resend Verification Code</button>
   	<br />
   	Given Info:<br />
-  	Name: ${name} <br />
-  	Address: ${address} <br />
+  	Name: ${firstname} ${lastname}<br />
+  	Birthday: ${month} ${day} ${year} <br />
+  	Gender: ${gender} <br />
+  	Address: ${street} ${city} ${state} ${zip}<br />
   	Username: ${username} <br />
   	Email: ${email} <br />
-  	Birthday: ${birthday} <br />
+  	Phone Number: ${phone} <br />
   	    <form action="BookServlet" method="get">
 	  	<button class="button" name="startover">START OVER</button>
 		</form>
