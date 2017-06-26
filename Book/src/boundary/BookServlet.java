@@ -93,8 +93,38 @@ public class BookServlet extends HttpServlet {
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
 		String zip = request.getParameter("zip");
+		addSalt(HttpServletRequest request, HttpServletResponse response);
+		matchPasswords(password, password2); 
+		addSalt(password); 
+		addPepper(password); 
+	}
+	
+	public void matchPasswords(String password, String password2){
+		if(password != password2){
+			System.out.println("ERROR: PASSWORD DO NOT MATCH"); 
+		}
 	}
 
+	public void addSalt(HttpServletRequest request, HttpServletResponse response) {
+		String password = request.getParameter("password");
+		//String password 
+		String s = password; 
+		  String s= (args[0]);
+	        for (int i = s.length()-1; i >= 0; i--) {            
+	        	password = s.charAt(i);    
+	        }
+	}
+	
+
+	public void addPeppper(String password){
+		String password = password + "8b24c1252"; 
+	}
+
+
+	public void addUserToDatabase(){
+		//call connection to SQL database 
+		
+	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
