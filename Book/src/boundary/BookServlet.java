@@ -93,10 +93,9 @@ public class BookServlet extends HttpServlet {
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
 		String zip = request.getParameter("zip");
-		addSalt(HttpServletRequest request, HttpServletResponse response);
 		matchPasswords(password, password2); 
-		addSalt(password); 
-		addPepper(password); 
+		addSalt(request, response);
+		//addPepper(password); 
 	}
 	
 	public void matchPasswords(String password, String password2){
@@ -108,16 +107,20 @@ public class BookServlet extends HttpServlet {
 	public void addSalt(HttpServletRequest request, HttpServletResponse response) {
 		String password = request.getParameter("password");
 		//String password 
-		String s = password; 
-		  String s= (args[0]);
+		String s = password;
+		String pass = "";
+		 // String s= (args[0]);
 	        for (int i = s.length()-1; i >= 0; i--) {            
-	        	password = s.charAt(i);    
+	        	pass += s.charAt(i);    
 	        }
+	        //password = pass;
+	        addPepper(pass);
 	}
 	
 
-	public void addPeppper(String password){
-		String password = password + "8b24c1252"; 
+	public void addPepper(String password){
+		password = password + "8b24c1252"; 
+		System.out.println(password);
 	}
 
 
