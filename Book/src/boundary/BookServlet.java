@@ -40,12 +40,16 @@ public class BookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String signup = request.getParameter("signup");
 		String startover = request.getParameter("startover");
+		String register = request.getParameter("register");
 		
 		if(signup!=null) {
 			VerifyUser(request, response);
 		}
 		if(startover!=null) {
 			StartOver(request, response);
+		}
+		if(register!=null) {
+			Register(request, response);
 		}
 		
 	}
@@ -76,6 +80,19 @@ public class BookServlet extends HttpServlet {
 		SimpleHash root = new SimpleHash(df.build());
 		String templateName = "signup.ftl";
 		process.processTemplate(templateName, root, request, response);
+	}
+	
+	public void Register(HttpServletRequest request, HttpServletResponse response) {
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String password2 = request.getParameter("password2");
+		String number = request.getParameter("number");
+		String street = request.getParameter("street");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		String zip = request.getParameter("zip");
 	}
 
 	
