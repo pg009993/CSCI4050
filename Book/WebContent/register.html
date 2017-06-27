@@ -88,6 +88,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </ul>
                 <div class="clearfix"></div>
 			   </div>
+
+
+			   <script type="text/javascript">
+			   	function checkPassword(){
+			   		var password = $("#password").val();
+			   		var password2 = $("#password2").val();
+			   	
+			   	if(password != password2){
+   					 $("#nonMatch").html("Passwords do not match!");
+   					 $('#submit').prop('disabled', true);
+			   		} 
+			   		else{
+			   			$("#nonMatch").html("Passwords match!");
+			   			$('#submit').prop('disabled', false);
+			   		}
+			   	}
+
+			   $(document).ready(function(){
+   					$("#password, #password2").keyup(checkPassword);
+				});
+			   </script>
+
 		<h2>Registration</h2>
 		<div class="registration-grids">
 			<div class="reg-form">
@@ -97,35 +119,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 <form action="BookServlet">
 						 <ul>
 							 <li class="text-info">First Name: </li>
-							 <li><input type="text" value="" name="firstname"></li>
+							 <li><input type="text" value="" name="firstname" required></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Last Name: </li>
-							 <li><input type="text" value="" name="lastname"></li>
+							 <li><input type="text" value="" name="lastname" required></li>
 						 </ul>				 
 						<ul>
 							 <li class="text-info">Email: </li>
-							 <li><input type="text" value="" name="email"></li>
+							 <li><input type="text" value="" name="email" required></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Password: </li>
-							 <li><input type="password" value="" name="password"></li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password" required></li>
+							<div class="matchClass" id="nonMatch"></div>
 						 </ul>
 						 <ul>
-							 <li class="text-info">Re-enter Password:</li>
-							 <li><input type="password" value="" name="password2"></li>
+							 <li class="text-info"">Re-enter Password:</li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2" required></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Mobile Number:</li>
-							 <li><input type="text" value="" name="number"></li>
+							 <li><input type="text" value="" name="number" required></li>
 						 </ul>		
 						 <ul>
 							 <li class="text-info">Street:</li>
-							 <li><input type="text" value="" name="street"></li>
+							 <li><input type="text" value="" name="street" required></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">City:</li>
-							 <li><input type="text" value="" name="city"></li>
+							 <li><input type="text" value="" name="city" required></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">State:</li>
@@ -185,10 +208,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							 </select></li>
 						 </ul>
 						  <ul>
-							 <li class="text-info">Zip:</li>
-							 <li><input type="text" value="" name="zip"></li>
+							 <li class="text-info">Zip: </li>
+							 <li><input type="text" value="" name="zip" required></li>
 						 </ul>					
-						 <input type="submit" value="REGISTER NOW" name="register">
+						 <input type="submit" value="REGISTER NOW" name="register" id="submit">
 						 <p class="click">By clicking this button, you are agree to my  <a href="#">Policy Terms and Conditions.</a></p> 
 					 </form>
 				 </div>

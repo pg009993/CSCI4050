@@ -98,11 +98,6 @@ public class BookServlet extends HttpServlet {
 		//addPepper(password); 
 	}
 	
-	public void matchPasswords(String password, String password2){
-		if(password != password2){
-			System.out.println("ERROR: PASSWORD DO NOT MATCH"); 
-		}
-	}
 
 	public void addSalt(HttpServletRequest request, HttpServletResponse response) {
 		String password = request.getParameter("password");
