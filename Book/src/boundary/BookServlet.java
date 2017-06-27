@@ -15,6 +15,10 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 
+import SQLConnector.Connector.src.Main;
+import SQLConnector.Connector.src.SQLConnector;
+
+
 /**
  * Servlet implementation class BookServlet
  */
@@ -63,8 +67,9 @@ public class BookServlet extends HttpServlet {
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
-		
-		
+		String newpass = addSalt(password);
+		SQLConnector conn = new SQLConnector();
+		conn.Login(email, newpass);
 		
 	}
 	
@@ -102,23 +107,22 @@ public class BookServlet extends HttpServlet {
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String password2 = request.getParameter("password2");
 		String number = request.getParameter("number");
 		String street = request.getParameter("street");
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
 		String zip = request.getParameter("zip");
-		matchPasswords(password, password2); 
-		addSalt(request, response);
+		String newpass = addSalt(password);
+		SQLConnector conn = new SQLConnector();
+		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip);
 		//addPepper(password); 
 	}
 	
 
-	public void addSalt(HttpServletRequest request, HttpServletResponse response) {
-		String password = request.getParameter("password");
+	public String addSalt(String password) {
 		//we want to add pepper first then salt  
 		//password = pass;
-        addPepper(pass);
+        addPepper(password);
 		//String password 
 		String s = password;
 		String pass = "";
@@ -126,6 +130,8 @@ public class BookServlet extends HttpServlet {
 	        for (int i = s.length()-1; i >= 0; i--) {            
 	        	pass += s.charAt(i);    
 	        }
+	        
+	        return pass;
 	}
 	
 
@@ -136,7 +142,7 @@ public class BookServlet extends HttpServlet {
 
 	public void sendVerificationEmail(HttpServletRequest request, HttpServletResponse response){
 		//randomly generate 6 digit verification code 
-		int verificatoinCode = 100000 + random_float() * 900000;
+		//int verificatoinCode = 100000 + random_float() * 900000;
 		String email = request.getParameter("email");
 		String firstname = request.getParameter("firstname");
 
