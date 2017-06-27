@@ -42,6 +42,11 @@ public class BookServlet extends HttpServlet {
 		String signup = request.getParameter("signup");
 		String startover = request.getParameter("startover");
 		String register = request.getParameter("register");
+		String login = request.getParameter("loginbutton"); 
+		
+		if(login != null){
+			LoginUser(request, response); 
+		}
 		
 		if(signup!=null) {
 			VerifyUser(request, response);
@@ -55,6 +60,15 @@ public class BookServlet extends HttpServlet {
 		
 	}
 	
+	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		
+		
+		
+	}
+	
+
 	public void VerifyUser(HttpServletRequest request, HttpServletResponse response) {
 		DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(df.build());

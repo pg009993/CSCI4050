@@ -19,7 +19,7 @@ public class SQLConnector {
 	
 	public void DislpayBooksXML(){
 		try{
-			String query = "SELECT * FROM BOOKS FOR XML RAW('Book');"; 
+			String query = "SELECT * FROM BOOKS;"; 
 			results = statement.executeQuery(query); 
 		
 			//https://www.mkyong.com/java/how-to-create-xml-file-in-java-dom/
