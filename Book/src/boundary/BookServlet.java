@@ -2,6 +2,7 @@ package boundary;
 
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -101,6 +102,9 @@ public class BookServlet extends HttpServlet {
 
 	public void addSalt(HttpServletRequest request, HttpServletResponse response) {
 		String password = request.getParameter("password");
+		//we want to add pepper first then salt  
+		//password = pass;
+        addPepper(pass);
 		//String password 
 		String s = password;
 		String pass = "";
@@ -108,8 +112,6 @@ public class BookServlet extends HttpServlet {
 	        for (int i = s.length()-1; i >= 0; i--) {            
 	        	pass += s.charAt(i);    
 	        }
-	        //password = pass;
-	        addPepper(pass);
 	}
 	
 
@@ -118,6 +120,18 @@ public class BookServlet extends HttpServlet {
 		System.out.println(password);
 	}
 
+	public void sendVerificationEmail(HttpServletRequest request, HttpServletResponse response){
+		//randomly generate 6 digit verification code 
+		int verificatoinCode = 100000 + random_float() * 900000;
+		String email = request.getParameter("email");
+		String firstname = request.getParameter("firstname");
+
+		//email format 
+		//Hi "firstname", here's your verfication code for our awesome book webaite. 
+		
+		
+
+	}
 
 	public void addUserToDatabase(){
 		//call connection to SQL database 
