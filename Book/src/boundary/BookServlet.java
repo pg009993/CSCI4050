@@ -51,7 +51,6 @@ public class BookServlet extends HttpServlet {
 		if(login != null){
 			LoginUser(request, response); 
 		}
-		
 		if(signup!=null) {
 			VerifyUser(request, response);
 		}
@@ -61,6 +60,16 @@ public class BookServlet extends HttpServlet {
 		if(register!=null) {
 			Register(request, response);
 		}
+
+				
+
+
+
+
+
+
+
+
 		
 	}
 	

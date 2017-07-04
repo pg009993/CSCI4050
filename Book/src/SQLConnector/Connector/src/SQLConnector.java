@@ -31,6 +31,8 @@ public class SQLConnector {
 		}
 	}
 	
+
+	/*
 	public void DisplayUserData(){
 		try{
 			String query = "SELECT * FROM USERS;"; 
@@ -70,7 +72,6 @@ public class SQLConnector {
 		}
 	}
 		
-		
 		public void DisplayBookData(){
 			try{
 				String query = "SELECT * FROM BOOKS;"; 
@@ -102,6 +103,8 @@ public class SQLConnector {
 				System.out.println("Error: " + e); 
 			}
 		}
+
+		*/
 		
 		public void InsertUser(String firstname, String lastname, String email, String password, String number, String street, String city, String state, String zip) {
 			//WRITE FUNCTION FOR ID
@@ -116,12 +119,63 @@ public class SQLConnector {
 			}
 		}
 		
-		
 		public void Login(String email, String password) {
 			try {
 			String query = "SELECT u.email AND u.password FROM users AS u;";
 			} catch(Exception e){
 				System.out.println("Invalid credentials. Please try again."); 
 			}
+
 		}
-}
+
+		public void InsertBook(String title, String publisher, String description, String isbn, String genre, String price){
+			String query = "INSERT into books(title, publisher, description, isbn, genre, price) values(NEED TO INSERT VALUES);"; 
+				Statement s = connection.createStatement();
+				int check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+		}
+
+
+		public void ApplyPromotion(int percentage){
+			//call this in the function when you calculate the total of the cart
+		}
+
+
+
+
+}//end of class 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
