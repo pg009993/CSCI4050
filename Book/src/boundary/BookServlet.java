@@ -66,10 +66,11 @@ public class BookServlet extends HttpServlet {
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
 		String password = request.getParameter("password");
 		//USERNAME NOT EMAIL
-		String email = request.getParameter("email");
+		//String email = request.getParameter("email");
+		String username = request.getParameter("username");
 		String newpass = addSalt(password);
 		SQLConnector conn = new SQLConnector();
-		conn.Login(email, newpass);
+		conn.Login(username, newpass);
 		
 	}
 	
@@ -116,12 +117,13 @@ public class BookServlet extends HttpServlet {
 		String month = request.getParameter("DOBMonth");
 		String day = request.getParameter("DOBDay");
 		String year = request.getParameter("DOBYear");
+		String username = request.getParameter("username");
 		String birthday = day + "-" + month + "-" + year;
 		System.out.println("BIRTHDAY: " + birthday);
 		String newpass = addSalt(password);
 		//Check username method
 		SQLConnector conn = new SQLConnector();
-		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday);
+		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
 		//addPepper(password); 
 		try {
 			response.sendRedirect("signin.html");
