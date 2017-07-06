@@ -2,6 +2,8 @@ package boundary;
 
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.servlet.ServletConfig;
@@ -122,17 +124,51 @@ public class BookServlet extends HttpServlet {
 		System.out.println("BIRTHDAY: " + birthday);
 		String newpass = addSalt(password);
 		//Check username method
+		boolean unique = UniqueUsername(username);
+		
+		if(unique) {
 		SQLConnector conn = new SQLConnector();
 		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
-		//addPepper(password); 
 		try {
 			response.sendRedirect("signin.html");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}	
 		}
+		else {
+			try {
+				response.sendRedirect("register.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 	
+	public boolean UniqueUsername(String username) {
+		String query = "SELECT * FROM users;";
+		SQLConnector conn = new SQLConnector();
+		ResultSet rs = conn.UserCheck(query);
+		boolean unique = true;
+		System.out.println("USERNAME: " + username);
+		
+		try {
+			while(rs.next()) {
+				String user = rs.getString("username");
+				System.out.println("USER: " + user);
+				if(user.equals(username)) {
+					unique = false;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return unique;
+		
+	}
 
 	public String addSalt(String password) {
 		//we want to add pepper first then salt  

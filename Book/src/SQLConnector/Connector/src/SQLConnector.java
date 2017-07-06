@@ -116,6 +116,16 @@ public class SQLConnector {
 			}
 		}
 		
+		public ResultSet UserCheck(String query) {
+			try {
+				results = statement.executeQuery(query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return results;
+		}
+		
 		public void Login(String email, String password) {
 			try {
 			String query = "SELECT u.username AND u.password FROM users AS u;";
