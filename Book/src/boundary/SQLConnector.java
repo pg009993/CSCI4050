@@ -1,3 +1,5 @@
+package boundary;
+
 import java.sql.*; 
 
 public class SQLConnector {

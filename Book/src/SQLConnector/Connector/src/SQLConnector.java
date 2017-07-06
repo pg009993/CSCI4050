@@ -106,11 +106,8 @@ public class SQLConnector {
 
 		*/
 		
-		public void InsertUser(String firstname, String lastname, String email, String password, String number, String street, String city, String state, String zip) {
-			//WRITE FUNCTION FOR ID
-			// ADD GENDER AND DOB
-			int id = 7;
-			String query = "INSERT into users(id, first_name, last_name, email, gender, DOB, city, state, street, password) values ('7', '" + firstname + "', '" + lastname + "', '" + email + "', 'Male', '1979-08-25 06:11:33', '" + city + "', '" + state + "', '" + street + "', '" + password + "');";		
+		public void InsertUser(String firstname, String lastname, String email, String password, String number, String street, String city, String state, String zip, String gender, String birthday) {
+			String query = "INSERT into users(first_name, last_name, email, gender, DOB, city, state, street, password, phone) values ('" + firstname + "', '" + lastname + "', '" + email + "', '" + gender + "', '" + birthday + "', '" + city + "', '" + state + "', '" + street + "', '" + password + "', '" + number + "');";		
 			try {
 				Statement s = connection.createStatement();
 				int check = s.executeUpdate(query);
@@ -123,11 +120,12 @@ public class SQLConnector {
 			try {
 			String query = "SELECT u.email AND u.password FROM users AS u;";
 			} catch(Exception e){
+				//REDIRECT THIS TO SIGNIN PAGE
 				System.out.println("Invalid credentials. Please try again."); 
 			}
 
 		}
-
+/*
 		public void InsertBook(String title, String publisher, String description, String isbn, String genre, String price){
 			String query = "INSERT into books(title, publisher, description, isbn, genre, price) values(NEED TO INSERT VALUES);"; 
 				Statement s = connection.createStatement();
@@ -136,7 +134,7 @@ public class SQLConnector {
 				System.out.println(e); 
 			}
 		}
-
+*/
 
 		public void ApplyPromotion(int percentage){
 			//call this in the function when you calculate the total of the cart

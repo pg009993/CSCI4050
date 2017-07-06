@@ -60,21 +60,12 @@ public class BookServlet extends HttpServlet {
 		if(register!=null) {
 			Register(request, response);
 		}
-
-				
-
-
-
-
-
-
-
-
 		
 	}
 	
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
 		String password = request.getParameter("password");
+		//USERNAME NOT EMAIL
 		String email = request.getParameter("email");
 		String newpass = addSalt(password);
 		SQLConnector conn = new SQLConnector();
@@ -121,10 +112,23 @@ public class BookServlet extends HttpServlet {
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
 		String zip = request.getParameter("zip");
+		String gender = request.getParameter("gender");
+		String month = request.getParameter("DOBMonth");
+		String day = request.getParameter("DOBDay");
+		String year = request.getParameter("DOBYear");
+		String birthday = day + "-" + month + "-" + year;
+		System.out.println("BIRTHDAY: " + birthday);
 		String newpass = addSalt(password);
+		//Check username method
 		SQLConnector conn = new SQLConnector();
-		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip);
+		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday);
 		//addPepper(password); 
+		try {
+			response.sendRedirect("signin.html");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
