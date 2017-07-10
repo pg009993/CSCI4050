@@ -126,14 +126,14 @@ public class SQLConnector {
 			return results;
 		}
 		
-		public void Login(String email, String password) {
+		public ResultSet Login(String query) {
 			try {
-			String query = "SELECT u.username AND u.password FROM users AS u;";
-			} catch(Exception e){
-				//maybe redirect to error page.
-				System.out.println("Invalid credentials. Please try again."); 
+				results = statement.executeQuery(query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
+			return results;
 		}
 /*
 		public void InsertBook(String title, String publisher, String description, String isbn, String genre, String price){

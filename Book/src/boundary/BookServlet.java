@@ -71,9 +71,42 @@ public class BookServlet extends HttpServlet {
 		//String email = request.getParameter("email");
 		String username = request.getParameter("username");
 		String newpass = addSalt(password);
+		//SQLConnector conn = new SQLConnector();
+		//conn.Login(username, newpass);
+		String query = "SELECT * FROM users;";
 		SQLConnector conn = new SQLConnector();
-		conn.Login(username, newpass);
+		ResultSet rs = conn.Login(query);
 		
+		boolean found=false;
+		
+		try {
+			while(rs.next()) {
+				String user = rs.getString("username");
+				String pass = rs.getString("password");
+				if(user.equals(username) && pass.equals(password)) {
+					found=true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(found) {
+			DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+			SimpleHash root = new SimpleHash(df.build());
+			root.put("username", username);
+			String templateName = "index.ftl";
+			process.processTemplate(templateName, root, request, response);
+		}
+		else {
+			try {
+				response.sendRedirect("signinerror.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 
