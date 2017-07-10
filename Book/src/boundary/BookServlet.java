@@ -138,7 +138,7 @@ public class BookServlet extends HttpServlet {
 		}
 		else {
 			try {
-				response.sendRedirect("register.html");
+				response.sendRedirect("registererror.html");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -152,12 +152,10 @@ public class BookServlet extends HttpServlet {
 		SQLConnector conn = new SQLConnector();
 		ResultSet rs = conn.UserCheck(query);
 		boolean unique = true;
-		System.out.println("USERNAME: " + username);
 		
 		try {
 			while(rs.next()) {
 				String user = rs.getString("username");
-				System.out.println("USER: " + user);
 				if(user.equals(username)) {
 					unique = false;
 				}
