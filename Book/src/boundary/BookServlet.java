@@ -30,6 +30,7 @@ public class BookServlet extends HttpServlet {
        
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor process;
+	private static String f, l, bd, bm, by, g, e, u, p, n, str, c, sta, z, i;
 	
     public BookServlet() {
         super();
@@ -85,6 +86,19 @@ public class BookServlet extends HttpServlet {
 				String pass = rs.getString("password");
 				if(user.equals(username) && pass.equals(password)) {
 					found=true;
+					f=rs.getString("first_name");
+					l=rs.getString("last_name");
+					bd=rs.getString("DOB");
+					g=rs.getString("gender");
+					e=rs.getString("email");
+					n=rs.getString("phone");
+					str=rs.getString("street");
+					c=rs.getString("city");
+					sta=rs.getString("state");
+					z=rs.getString("zip");
+					u = user;
+					p = pass;
+					i = rs.getString("id");
 				}
 			}
 		} catch (SQLException e) {

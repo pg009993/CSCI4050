@@ -107,7 +107,7 @@ public class SQLConnector {
 		*/
 		
 		public void InsertUser(String firstname, String lastname, String email, String password, String number, String street, String city, String state, String zip, String gender, String birthday, String username) {
-			String query = "INSERT into users(first_name, last_name, email, gender, DOB, city, state, street, password, phone, username) values ('" + firstname + "', '" + lastname + "', '" + email + "', '" + gender + "', '" + birthday + "', '" + city + "', '" + state + "', '" + street + "', '" + password + "', '" + number + "', '" + username + "');";		
+			String query = "INSERT into users(first_name, last_name, email, gender, DOB, city, state, street, password, phone, username, zip) values ('" + firstname + "', '" + lastname + "', '" + email + "', '" + gender + "', '" + birthday + "', '" + city + "', '" + state + "', '" + street + "', '" + password + "', '" + number + "', '" + username + "', '" + zip + "');";		
 			try {
 				Statement s = connection.createStatement();
 				int check = s.executeUpdate(query);
