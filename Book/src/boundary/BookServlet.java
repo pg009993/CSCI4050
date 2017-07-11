@@ -50,7 +50,12 @@ public class BookServlet extends HttpServlet {
 		String startover = request.getParameter("startover");
 		String register = request.getParameter("register");
 		String login = request.getParameter("loginbutton"); 
+		String editprofile = request.getParameter("editprofile");
 		
+		if(editprofile!=null) {
+			EditProfile(request,response);
+			System.out.println("editprofile pressed.");
+		}
 		if(login != null){
 			LoginUser(request, response); 
 		}
@@ -64,6 +69,25 @@ public class BookServlet extends HttpServlet {
 			Register(request, response);
 		}
 		
+	}
+	
+	public void EditProfile(HttpServletRequest request, HttpServletResponse response) {
+		DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+		SimpleHash root = new SimpleHash(df.build());
+		root.put("firstname", f);
+		root.put("lastname", l);
+		root.put("dob", bd);
+		root.put("gender", g);
+		root.put("street", str);
+		root.put("city", c);
+		root.put("state", sta);
+		root.put("zip", z);
+		root.put("username", u);
+		root.put("password", p);
+		root.put("email", e);
+		root.put("phone", n);		
+		String templateName = "editprofile.ftl";
+		process.processTemplate(templateName, root, request, response);
 	}
 	
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){

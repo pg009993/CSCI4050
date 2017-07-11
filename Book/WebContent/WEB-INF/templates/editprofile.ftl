@@ -119,11 +119,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 <form action="BookServlet">
 						 <ul>
 							 <li class="text-info">First Name: </li>
-							 <li><input type="text" value="" name="firstname" required></li>
+							 <li><input type="text" value="${firstname}" name="firstname" required></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Last Name: </li>
-							 <li><input type="text" value="" name="lastname" required></li>
+							 <li><input type="text" value="${lastname}" name="lastname" required></li>
 						 </ul>	
 
 						<ul>
@@ -248,32 +248,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 						<ul>
 							 <li class="text-info">Email: </li>
-							 <li><input type="text" value="" name="email" required></li>
+							 <li><input type="text" value="${email}" name="email" required></li>
 						 </ul>
 						<ul>
 							 <li class="text-info">Username: </li>
-							 <li><input type="text" value="" name="username" required></li>
+							 <li><input type="text" value="${username}" name="username" required></li>
 						 </ul>						 
 						 <ul>
 							 <li class="text-info">Password: </li>
-							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password" required></li>
+							 <li><input type="password" onchange="checkPassword(); value="${password}" name="password" id="password" required></li>
 							<div class="matchClass" id="nonMatch"></div>
 						 </ul>
 						 <ul>
-							 <li class="text-info"">Re-enter Password:</li>
-							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2" required></li>
-						 </ul>
-						 <ul>
 							 <li class="text-info">Mobile Number:</li>
-							 <li><input type="text" value="" name="number" required></li>
+							 <li><input type="text" value="${phone}" name="number" required></li>
 						 </ul>		
 						 <ul>
 							 <li class="text-info">Street:</li>
-							 <li><input type="text" value="" name="street" required></li>
+							 <li><input type="text" value="${street}" name="street" required></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">City:</li>
-							 <li><input type="text" value="" name="city" required></li>
+							 <li><input type="text" value="${city}" name="city" required></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">State:</li>
@@ -334,7 +330,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						 </ul>
 						  <ul>
 							 <li class="text-info">Zip: </li>
-							 <li><input type="text" value="" name="zip" required></li>
+							 <li><input type="text" value="${zip}" name="zip" required></li>
 						 </ul>					
 						 <input type="submit" value="REGISTER NOW" name="register" id="submit">
 						 <p class="click">By clicking this button, you are agree to my  <a href="#">Policy Terms and Conditions.</a></p> 
@@ -375,7 +371,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<img src="images/cards.jpg" alt="" />
 		  </div>
 		  <div class="copyright text-center">
-				<p>Â© 2015 Eshop. All Rights Reserved | Design by   <a href="http://w3layouts.com">  W3layouts</a></p>
+				<p>© 2015 Eshop. All Rights Reserved | Design by   <a href="http://w3layouts.com">  W3layouts</a></p>
 		  </div>
 		</div>
 		</div>
