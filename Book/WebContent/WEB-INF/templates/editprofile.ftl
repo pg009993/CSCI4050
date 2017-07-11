@@ -35,8 +35,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<div class="header-top-left">
 					<ul>
-						<li><a href="account.html"><span class="glyphicon glyphicon-user"> </span>Login</a></li>
-						<li><a href="register.html"><span class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>			
+						<li><font color="white">Welcome, ${username} </font></li>
+						<li><form action="BookServlet"><button name="editprofile">Edit Profile</button></form></a></li>	
+						<a href="signin.html"><span class="glyphicon glyphicon-user"> </span>Logout</a></li>
 					</ul>
 				</div>
 				<div class="header-right">
@@ -80,7 +81,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                        <span>&gt;</span>
                     </li>
                     <li class="women">
-                       Registration
+                       Edit Profile
                     </li>
                 </ul>
                 <ul class="previous">
@@ -110,7 +111,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				});
 			   </script>
 
-		<h2>Registration</h2>
+		<h2>Edit Profile</h2>
 		<div class="registration-grids">
 			<div class="reg-form">
 				<div class="reg">
@@ -119,11 +120,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 <form action="BookServlet">
 						 <ul>
 							 <li class="text-info">First Name: </li>
-							 <li><input type="text" value="${firstname}" name="firstname" required></li>
+							 <li><input type="text" value="${firstname}" name="firstname"></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Last Name: </li>
-							 <li><input type="text" value="${lastname}" name="lastname" required></li>
+							 <li><input type="text" value="${lastname}" name="lastname"></li>
 						 </ul>	
 
 						<ul>
@@ -248,28 +249,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 						<ul>
 							 <li class="text-info">Email: </li>
-							 <li><input type="text" value="${email}" name="email" required></li>
+							 <li><input type="text" value="${email}" name="email"></li>
 						 </ul>
 						<ul>
 							 <li class="text-info">Username: </li>
-							 <li><input type="text" value="${username}" name="username" required></li>
-						 </ul>						 
+							 <li><input type="text" value="${username}" name="username"></li>
+						 </ul>			
+						 
 						 <ul>
-							 <li class="text-info">Password: </li>
-							 <li><input type="password" onchange="checkPassword(); value="${password}" name="password" id="password" required></li>
+						 	<li class="text-info">Old Password: </li>
+						 	<li><input type="password" name="oldpass" id="oldpass"></li>
+						 </ul>			 			 
+						 <ul>
+							 <li class="text-info">New Password: </li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password" required></li>
 							<div class="matchClass" id="nonMatch"></div>
 						 </ul>
 						 <ul>
+							 <li class="text-info"">Re-enter New Password:</li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2" required></li>
+						 </ul>
+						 <ul>
 							 <li class="text-info">Mobile Number:</li>
-							 <li><input type="text" value="${phone}" name="number" required></li>
+							 <li><input type="text" value="${phone}" name="number"></li>
 						 </ul>		
 						 <ul>
 							 <li class="text-info">Street:</li>
-							 <li><input type="text" value="${street}" name="street" required></li>
+							 <li><input type="text" value="${street}" name="street"></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">City:</li>
-							 <li><input type="text" value="${city}" name="city" required></li>
+							 <li><input type="text" value="${city}" name="city"></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">State:</li>
@@ -330,7 +340,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						 </ul>
 						  <ul>
 							 <li class="text-info">Zip: </li>
-							 <li><input type="text" value="${zip}" name="zip" required></li>
+							 <li><input type="text" value="${zip}" name="zip"></li>
 						 </ul>					
 						 <input type="submit" value="REGISTER NOW" name="register" id="submit">
 						 <p class="click">By clicking this button, you are agree to my  <a href="#">Policy Terms and Conditions.</a></p> 
