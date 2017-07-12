@@ -155,7 +155,6 @@ public class BookServlet extends HttpServlet {
 		String year = request.getParameter("DOBYear");
 		String username = request.getParameter("username");
 		String birthday = day + "-" + month + "-" + year;
-		System.out.println("BIRTHDAY: " + birthday);
 		String newpass = addSalt(password);
 		//Check username method
 		boolean unique = UniqueUsername(username);
@@ -220,7 +219,6 @@ public class BookServlet extends HttpServlet {
 
 	public void addPepper(String password){
 		password = password + "8b24c1252"; 
-		System.out.println(password);
 	}
 
 	public void sendVerificationEmail(HttpServletRequest request, HttpServletResponse response){
