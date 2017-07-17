@@ -30,7 +30,8 @@ public class BookServlet extends HttpServlet {
        
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor process;
-	private static String f, l, bd, bm, by, g, e, u, p, n, str, c, sta, z, i;
+	private static String f, l, bd, g, e, u, p, n, str, c, sta, z;
+	private static int i;
 	
     public BookServlet() {
         super();
@@ -49,7 +50,11 @@ public class BookServlet extends HttpServlet {
 		String register = request.getParameter("register");
 		String login = request.getParameter("loginbutton"); 
 		String editprofile = request.getParameter("editprofile");
+		String submitedit = request.getParameter("submitedit");
 		
+		if(submitedit!=null) {
+			SubmitEdit(request, response);
+		}
 		if(editprofile!=null) {
 			EditProfile(request,response);
 			System.out.println("editprofile pressed.");
@@ -60,9 +65,83 @@ public class BookServlet extends HttpServlet {
 		if(register!=null) {
 			Register(request, response);
 		}
-		
 	}
 	
+	public void SubmitEdit(HttpServletRequest request, HttpServletResponse response) {
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String email = request.getParameter("email");
+		String oldpass = request.getParameter("oldpass");
+		String password = request.getParameter("password");
+		String number = request.getParameter("number");
+		String street = request.getParameter("street");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		String zip = request.getParameter("zip");
+		String gender = request.getParameter("gender");
+		String month = request.getParameter("DOBMonth");
+		String day = request.getParameter("DOBDay");
+		String year = request.getParameter("DOBYear");
+		String birthday = day + "-" + month + "-" + year;
+		
+		String salt = addSalt(oldpass);
+		boolean exists = false;
+		
+		String query = "SELECT * FROM users;";
+		SQLConnector conn = new SQLConnector();
+		ResultSet rs = conn.Login(query);
+		
+		try {
+			while(rs.next()) {
+				String pass = rs.getString("password");
+				int id = rs.getInt("id");
+				if(pass.equals(salt) && id==i) {
+					exists = true;
+					String newsalt=addSalt(password);
+					if(!(day.equals("Day") || month.equals("Month") || year.equals("Year"))) {
+						bd=birthday;
+					}
+					if(str!=street) {
+						str=street;
+					}
+					if(c!=city) {
+						c=city;
+					}
+					if(sta!=state) {
+						sta=state;
+					}
+					if(z!=zip) {
+						z=zip;
+					}
+					if(firstname!=f) {
+						f=firstname;
+					}
+					if(lastname!=l) {
+						l=lastname;
+					}
+					if(gender!=g && gender!=null) {
+						g=gender;
+					}
+					if(email!=e) {
+						e=email;
+					}
+					if(p!=newsalt && password!=null) {
+						p=newsalt;
+					}
+					if(n!=number) {
+						n=number;
+					}
+				}
+				
+				conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+ 	
 	public void EditProfile(HttpServletRequest request, HttpServletResponse response) {
 		DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(df.build());
@@ -74,7 +153,6 @@ public class BookServlet extends HttpServlet {
 		root.put("city", c);
 		root.put("state", sta);
 		root.put("zip", z);
-		root.put("username", u);
 		root.put("password", p);
 		root.put("email", e);
 		root.put("phone", n);		
@@ -100,7 +178,7 @@ public class BookServlet extends HttpServlet {
 			while(rs.next()) {
 				String user = rs.getString("username");
 				String pass = rs.getString("password");
-				if(user.equals(username) && pass.equals(password)) {
+				if(user.equals(username) && pass.equals(newpass)) {
 					found=true;
 					f=rs.getString("first_name");
 					l=rs.getString("last_name");
@@ -114,7 +192,7 @@ public class BookServlet extends HttpServlet {
 					z=rs.getString("zip");
 					u = user;
 					p = pass;
-					i = rs.getString("id");
+					i = rs.getInt("id");
 				}
 			}
 		} catch (SQLException e) {
@@ -159,6 +237,7 @@ public class BookServlet extends HttpServlet {
 		//Check username method
 		boolean unique = UniqueUsername(username);
 		
+		
 		if(unique) {
 		SQLConnector conn = new SQLConnector();
 		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
@@ -198,15 +277,14 @@ public class BookServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		return unique;
-		
 	}
 
 	public String addSalt(String password) {
 		//we want to add pepper first then salt  
 		//password = pass;
-        addPepper(password);
+        String p = addPepper(password);
 		//String password 
-		String s = password;
+		String s = p;
 		String pass = "";
 		 // String s= (args[0]);
 	        for (int i = s.length()-1; i >= 0; i--) {            
@@ -217,21 +295,9 @@ public class BookServlet extends HttpServlet {
 	}
 	
 
-	public void addPepper(String password){
-		password = password + "8b24c1252"; 
-	}
-
-	public void sendVerificationEmail(HttpServletRequest request, HttpServletResponse response){
-		//randomly generate 6 digit verification code 
-		//int verificatoinCode = 100000 + random_float() * 900000;
-		String email = request.getParameter("email");
-		String firstname = request.getParameter("firstname");
-
-		//email format 
-		//Hi "firstname", here's your verfication code for our awesome book webaite. 
-		
-		
-
+	public String addPepper(String password){
+		String pass = password + "8b24c1252";
+		return pass;
 	}
 
 	public void addUserToDatabase(){

@@ -106,6 +106,16 @@ public class SQLConnector {
 
 		*/
 		
+		public void UpdateUser(String firstname, String lastname, String email, String password, String number, String street, String city, String state, String zip, String gender, String birthday, int id) {
+			String query = "UPDATE users SET first_name='" + firstname + "', last_name='" + lastname + "', email='" + email + "', password='" + password + "', phone='" + number + "', street='" + street + "', city=" + city + "', state='" + state + "', zip='" + zip + "', gender='" + gender + "', DOB='" + birthday + "' WHERE id=" + id + ";";
+			try {
+				Statement s = connection.createStatement();
+				int check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+		}
+	
 		public void InsertUser(String firstname, String lastname, String email, String password, String number, String street, String city, String state, String zip, String gender, String birthday, String username) {
 			String query = "INSERT into users(first_name, last_name, email, gender, DOB, city, state, street, password, phone, username, zip) values ('" + firstname + "', '" + lastname + "', '" + email + "', '" + gender + "', '" + birthday + "', '" + city + "', '" + state + "', '" + street + "', '" + password + "', '" + number + "', '" + username + "', '" + zip + "');";		
 			try {

@@ -117,6 +117,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="reg">
 					 <p>Welcome, please enter the following details to continue.</p>
 					 <p>If you have previously registered with us, <a href="#">click here</a></p>
+					 
+ 					<b><font color="red" size="4"> Username taken. Please try again.</font></b> <br />
+
 					 <form action="BookServlet">
 						 <ul>
 							 <li class="text-info">First Name: </li>
@@ -250,7 +253,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<ul>
 							 <li class="text-info">Email: </li>
 							 <li><input type="text" value="${email}" name="email"></li>
-						 </ul>			 
+						 </ul>
 						 <ul>
 						 	<li class="text-info">Old Password: </li>
 						 	<li><input type="password" name="oldpass" id="oldpass"></li>
