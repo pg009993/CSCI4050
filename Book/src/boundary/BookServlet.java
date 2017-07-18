@@ -53,6 +53,7 @@ public class BookServlet extends HttpServlet {
 		String submitedit = request.getParameter("submitedit");
 		
 		if(submitedit!=null) {
+			System.out.println("submitted edit profile");
 			SubmitEdit(request, response);
 		}
 		if(editprofile!=null) {
@@ -95,7 +96,8 @@ public class BookServlet extends HttpServlet {
 			while(rs.next()) {
 				String pass = rs.getString("password");
 				int id = rs.getInt("id");
-				if(pass.equals(salt) && id==i) {
+				if(id==i) {
+					System.out.println("user found");
 					exists = true;
 					String newsalt=addSalt(password);
 					if(!(day.equals("Day") || month.equals("Month") || year.equals("Year"))) {
@@ -115,6 +117,7 @@ public class BookServlet extends HttpServlet {
 					}
 					if(firstname!=f) {
 						f=firstname;
+						System.out.println("firstname");
 					}
 					if(lastname!=l) {
 						l=lastname;
@@ -131,9 +134,9 @@ public class BookServlet extends HttpServlet {
 					if(n!=number) {
 						n=number;
 					}
+					conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
 				}
 				
-				conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
 			
 			}
 		} catch (SQLException e) {
@@ -148,6 +151,7 @@ public class BookServlet extends HttpServlet {
 		root.put("firstname", f);
 		root.put("lastname", l);
 		root.put("dob", bd);
+		root.put("username", u);
 		root.put("gender", g);
 		root.put("street", str);
 		root.put("city", c);

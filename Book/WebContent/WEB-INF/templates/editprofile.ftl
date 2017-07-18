@@ -257,12 +257,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						 </ul>			 			 
 						 <ul>
 							 <li class="text-info">New Password: </li>
-							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password" required></li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password"></li>
 							<div class="matchClass" id="nonMatch"></div>
 						 </ul>
 						 <ul>
 							 <li class="text-info"">Re-enter New Password:</li>
-							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2" required></li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2"></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Mobile Number:</li>
