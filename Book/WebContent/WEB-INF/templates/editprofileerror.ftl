@@ -120,7 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 
  					<b><font color="red" size="4"> Username taken. Please try again.</font></b> <br />
 
-					 <form action="BookServlet">
+					 <form action="BookServlet" method="post">
 						 <ul>
 							 <li class="text-info">First Name: </li>
 							 <li><input type="text" value="${firstname}" name="firstname"></li>

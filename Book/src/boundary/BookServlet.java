@@ -47,25 +47,7 @@ public class BookServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String register = request.getParameter("register");
-		String login = request.getParameter("loginbutton"); 
-		String editprofile = request.getParameter("editprofile");
-		String submitedit = request.getParameter("submitedit");
-		
-		if(submitedit!=null) {
-			System.out.println("submitted edit profile");
-			SubmitEdit(request, response);
-		}
-		if(editprofile!=null) {
-			EditProfile(request,response);
-			System.out.println("editprofile pressed.");
-		}
-		if(login != null){
-			LoginUser(request, response); 
-		}
-		if(register!=null) {
-			Register(request, response);
-		}
+		doPost(request, response);
 	}
 	
 	public void SubmitEdit(HttpServletRequest request, HttpServletResponse response) {
@@ -100,7 +82,7 @@ public class BookServlet extends HttpServlet {
 					System.out.println("user found");
 					exists = true;
 					String newsalt=addSalt(password);
-					if(!(day.equals("Day") || month.equals("Month") || year.equals("Year"))) {
+					if(!(day.equals("Day") && month.equals("Month") && year.equals("Year"))) {
 						bd=birthday;
 					}
 					if(str!=street) {
@@ -128,13 +110,19 @@ public class BookServlet extends HttpServlet {
 					if(email!=e) {
 						e=email;
 					}
-					if(p!=newsalt && password!=null) {
+					if(!(p.equals(newsalt)) && !(password.equals(""))) {
+						System.out.println("PASSWORD: " + password);
 						p=newsalt;
 					}
 					if(n!=number) {
 						n=number;
 					}
 					conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
+					DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+					SimpleHash root = new SimpleHash(df.build());
+					root.put("username", u);
+					String templateName = "index.ftl";
+					process.processTemplate(templateName, root, request, response);
 				}
 				
 			
@@ -310,8 +298,25 @@ public class BookServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String register = request.getParameter("register");
+		String login = request.getParameter("loginbutton"); 
+		String editprofile = request.getParameter("editprofile");
+		String submitedit = request.getParameter("submitedit");
+		
+		if(submitedit!=null) {
+			System.out.println("submitted edit profile");
+			SubmitEdit(request, response);
+		}
+		if(editprofile!=null) {
+			EditProfile(request,response);
+			System.out.println("editprofile pressed.");
+		}
+		if(login != null){
+			LoginUser(request, response); 
+		}
+		if(register!=null) {
+			Register(request, response);
+		}
 	}
 
 }

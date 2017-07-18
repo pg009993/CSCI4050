@@ -117,7 +117,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="reg">
 					 <p>Welcome, please enter the following details to continue.</p>
 					 <p>If you have previously registered with us, <a href="#">click here</a></p>
-					 <form action="BookServlet">
+					 <form action="BookServlet" method="post">
 						 <ul>
 							 <li class="text-info">First Name: </li>
 							 <li><input type="text" value="${firstname}" name="firstname"></li>
@@ -337,7 +337,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							 <li class="text-info">Zip: </li>
 							 <li><input type="text" value="${zip}" name="zip"></li>
 						 </ul>					
-						 <input type="submit" value="EDIT PROFILE" name="submitedit" id="submit">
+						<script>
+						function updated(){
+						alert("Profile successfully updated");
+						}
+						</script>
+						  
+						 <input type="submit" value="EDIT PROFILE" name="submitedit" id="submit" onclick="updated()">
+						 
 						 <p class="click">By clicking this button, you are agree to my  <a href="#">Policy Terms and Conditions.</a></p> 
 					 </form>
 				 </div>
