@@ -36,7 +36,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-top-left">
 					<ul>
 						<li><font color="white">Welcome, ${username} </font></li>
-						<li><form action="BookServlet"><button name="editprofile">Edit Profile</button></form></a></li>	
+						<li><form action="BookServlet"><button name="editprofile" id="editp">Edit Profile</button></form></a></li>	
 						<a href="signin.html"><span class="glyphicon glyphicon-user"> </span>Logout</a></li>		
 					</ul>
 				</div>

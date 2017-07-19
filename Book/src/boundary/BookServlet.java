@@ -47,7 +47,11 @@ public class BookServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		String text = "some text";
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(text);
+//		doPost(request, response);
 	}
 	
 	public void SubmitEdit(HttpServletRequest request, HttpServletResponse response) {
@@ -298,10 +302,27 @@ public class BookServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String Username = request.getParameter("username");
+		String Password = request.getParameter("password");
 		String register = request.getParameter("register");
-		String login = request.getParameter("loginbutton"); 
+		String login = request.getParameter("loginbutton");
 		String editprofile = request.getParameter("editprofile");
 		String submitedit = request.getParameter("submitedit");
+		String loadPopular = request.getParameter("loadPopular");
+		
+		if(Username != null) {
+			System.out.println(Username);
+		}
+		
+		if(Password != null) {
+			System.out.println(Password);
+		}
+		
+		if(loadPopular!=null) {
+			//Get Popular books
+			System.out.println("loadPopular");
+			response.getWriter().write("Hello World");
+		}
 		
 		if(submitedit!=null) {
 			System.out.println("submitted edit profile");
@@ -312,6 +333,7 @@ public class BookServlet extends HttpServlet {
 			System.out.println("editprofile pressed.");
 		}
 		if(login != null){
+			System.out.println("We are logging in too!");
 			LoginUser(request, response); 
 		}
 		if(register!=null) {

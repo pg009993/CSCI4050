@@ -27,6 +27,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="js/simpleCart.min.js"> </script>
 <!-- cart -->
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+<script>
+	$(document).on("submit", "#LoginForm", function(event) {
+		var $form = $(this);
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+
+		});
+		event.preventDefault();
+	});
+</script>
+
 </head>
 <body>
 	<!-- header-section-starts -->
@@ -95,10 +105,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			  	<h3>REGISTERED CUSTOMERS</h3>
 				<p>If you have an account with us, please log in.</p>
-				<form action="BookServlet" method="post">
+				<form id="LoginForm" action="BookServlet" method="post">
 				  <div>
 					<span>Username<label>*</label></span>
-					<input type="text"  name="username" required> 
+					<input type="text" id="UsernameBox" name="username" required> 
 				  </div>
 				  <div>
 					<span>Password<label>*</label></span>
