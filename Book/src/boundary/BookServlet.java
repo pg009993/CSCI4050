@@ -17,8 +17,8 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 
-import SQLConnector.Connector.src.Main;
-import SQLConnector.Connector.src.SQLConnector;
+import logiclayer.LogicConnector;
+import object.User;
 
 
 /**
@@ -71,8 +71,8 @@ public class BookServlet extends HttpServlet {
 		boolean exists = false;
 		
 		String query = "SELECT * FROM users;";
-		SQLConnector conn = new SQLConnector();
-		ResultSet rs = conn.Login(query);
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.Login(query);
 		
 		try {
 			while(rs.next()) {
@@ -117,7 +117,10 @@ public class BookServlet extends HttpServlet {
 					if(n!=number) {
 						n=number;
 					}
-					conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
+					
+					User user = new User(f,l,e,p,n,str,c,sta,z,g,bd,u,i);
+					int check = logic.UpdateUser(user);
+					//conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
 					DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 					SimpleHash root = new SimpleHash(df.build());
 					root.put("username", u);
@@ -154,15 +157,12 @@ public class BookServlet extends HttpServlet {
 	
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
 		String password = request.getParameter("password");
-		//USERNAME NOT EMAIL
-		//String email = request.getParameter("email");
 		String username = request.getParameter("username");
 		String newpass = addSalt(password);
-		//SQLConnector conn = new SQLConnector();
-		//conn.Login(username, newpass);
+
 		String query = "SELECT * FROM users;";
-		SQLConnector conn = new SQLConnector();
-		ResultSet rs = conn.Login(query);
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.Login(query);
 		
 		boolean found=false;
 		
@@ -226,13 +226,13 @@ public class BookServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String birthday = day + "-" + month + "-" + year;
 		String newpass = addSalt(password);
-		//Check username method
 		boolean unique = UniqueUsername(username);
 		
+		User u = new User(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
 		
 		if(unique) {
-		SQLConnector conn = new SQLConnector();
-		conn.InsertUser(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
+		LogicConnector logic = new LogicConnector();
+		int check = logic.addUser(u);
 		try {
 			response.sendRedirect("signin.html");
 		} catch (IOException e) {
@@ -253,8 +253,8 @@ public class BookServlet extends HttpServlet {
 	
 	public boolean UniqueUsername(String username) {
 		String query = "SELECT * FROM users;";
-		SQLConnector conn = new SQLConnector();
-		ResultSet rs = conn.UserCheck(query);
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.UserCheck(query);
 		boolean unique = true;
 		
 		try {
@@ -290,11 +290,6 @@ public class BookServlet extends HttpServlet {
 	public String addPepper(String password){
 		String pass = password + "8b24c1252";
 		return pass;
-	}
-
-	public void addUserToDatabase(){
-		//call connection to SQL database 
-		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
