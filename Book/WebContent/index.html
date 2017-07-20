@@ -27,13 +27,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="js/simpleCart.min.js"> </script>
 <!-- cart -->
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
-<script>
-	$(document).ready(function() {
-		$.get("BookServlet", function(responseText) {
-			$("#RegisterLink").text(responseText);
-		});
-	});
-</script>
 </head>
 <body>
 	<!-- header-section-starts -->
@@ -43,7 +36,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-top-left">
 					<ul>
 						<li><a href="signin.html"><span class="glyphicon glyphicon-user"> </span>Login</a></li>
-						<li><a id="RegisterLink" href="register.html"><span class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>			
+						<li><a href="register.html"><span class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>			
 					</ul>
 				</div>
 				<div class="header-right">
