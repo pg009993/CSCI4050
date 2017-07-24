@@ -27,17 +27,17 @@ import object.User;
 @WebServlet("/BookServlet")
 public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor process;
 	private static String f, l, bd, g, e, u, p, n, str, c, sta, z;
 	private static int i;
-	
-    public BookServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
+
+	public BookServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		process = new TemplateProcessor(templateDir, getServletContext());
@@ -49,7 +49,7 @@ public class BookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
-	
+
 	public void SubmitEdit(HttpServletRequest request, HttpServletResponse response) {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
@@ -66,14 +66,14 @@ public class BookServlet extends HttpServlet {
 		String day = request.getParameter("DOBDay");
 		String year = request.getParameter("DOBYear");
 		String birthday = day + "-" + month + "-" + year;
-		
+
 		String salt = addSalt(oldpass);
 		boolean exists = false;
-		
+
 		String query = "SELECT * FROM users;";
 		LogicConnector logic = new LogicConnector();
 		ResultSet rs = logic.Login(query);
-		
+
 		try {
 			while(rs.next()) {
 				String pass = rs.getString("password");
@@ -117,7 +117,7 @@ public class BookServlet extends HttpServlet {
 					if(n!=number) {
 						n=number;
 					}
-					
+
 					User user = new User(f,l,e,p,n,str,c,sta,z,g,bd,u,i);
 					int check = logic.UpdateUser(user);
 					//conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
@@ -127,15 +127,15 @@ public class BookServlet extends HttpServlet {
 					String templateName = "index.ftl";
 					process.processTemplate(templateName, root, request, response);
 				}
-				
-			
+
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- 	
+
 	public void EditProfile(HttpServletRequest request, HttpServletResponse response) {
 		DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(df.build());
@@ -154,7 +154,7 @@ public class BookServlet extends HttpServlet {
 		String templateName = "editprofile.ftl";
 		process.processTemplate(templateName, root, request, response);
 	}
-	
+
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
 		String password = request.getParameter("password");
 		String username = request.getParameter("username");
@@ -163,9 +163,9 @@ public class BookServlet extends HttpServlet {
 		String query = "SELECT * FROM users;";
 		LogicConnector logic = new LogicConnector();
 		ResultSet rs = logic.Login(query);
-		
+
 		boolean found=false;
-		
+
 		try {
 			while(rs.next()) {
 				String user = rs.getString("username");
@@ -191,13 +191,18 @@ public class BookServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if(found) {
-			DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
-			SimpleHash root = new SimpleHash(df.build());
-			root.put("username", username);
-			String templateName = "index.ftl";
-			process.processTemplate(templateName, root, request, response);
+			request.setAttribute("username", u);
+			try {
+				request.getRequestDispatcher("loggedin.jsp").forward(request, response);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else {
 			try {
@@ -208,7 +213,7 @@ public class BookServlet extends HttpServlet {
 			}
 		}
 	}
-	
+
 	public void Register(HttpServletRequest request, HttpServletResponse response) {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
@@ -227,18 +232,18 @@ public class BookServlet extends HttpServlet {
 		String birthday = day + "-" + month + "-" + year;
 		String newpass = addSalt(password);
 		boolean unique = UniqueUsername(username);
-		
+
 		User u = new User(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
-		
+
 		if(unique) {
-		LogicConnector logic = new LogicConnector();
-		int check = logic.addUser(u);
-		try {
-			response.sendRedirect("signin.html");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+			LogicConnector logic = new LogicConnector();
+			int check = logic.addUser(u);
+			try {
+				response.sendRedirect("signin.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		else {
 			try {
@@ -250,13 +255,13 @@ public class BookServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	public boolean UniqueUsername(String username) {
 		String query = "SELECT * FROM users;";
 		LogicConnector logic = new LogicConnector();
 		ResultSet rs = logic.UserCheck(query);
 		boolean unique = true;
-		
+
 		try {
 			while(rs.next()) {
 				String user = rs.getString("username");
@@ -274,30 +279,111 @@ public class BookServlet extends HttpServlet {
 	public String addSalt(String password) {
 		//we want to add pepper first then salt  
 		//password = pass;
-        String p = addPepper(password);
+		String p = addPepper(password);
 		//String password 
 		String s = p;
 		String pass = "";
-		 // String s= (args[0]);
-	        for (int i = s.length()-1; i >= 0; i--) {            
-	        	pass += s.charAt(i);    
-	        }
-	        
-	        return pass;
+		// String s= (args[0]);
+		for (int i = s.length()-1; i >= 0; i--) {            
+			pass += s.charAt(i);    
+		}
+
+		return pass;
 	}
-	
+
 
 	public String addPepper(String password){
 		String pass = password + "8b24c1252";
 		return pass;
 	}
+
+	public void AddToCart(HttpServletRequest request, HttpServletResponse response) {
+		String isbn = request.getParameter("isbn");
+		String price = request.getParameter("price");
+		String title = request.getParameter("title");
+		LogicConnector logic = new LogicConnector();
+
+		ResultSet rs = logic.ReturnBooks(isbn);
+
+		try {
+			while(rs.next()) {
+				String query = "INSERT INTO cart(username, ISBN, title, price) VALUES('" + u + "', '" + isbn + "', '" + title + "', '" + price + "');";
+				logic.AddToCart(query);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("username", u);
+		try {
+			request.getRequestDispatcher("loggedin.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+	public void Logout(HttpServletRequest request, HttpServletResponse response) {
+		f=null;
+		l=null;
+		bd=null;
+		g=null;
+		e=null;
+		u=null;
+		p=null;
+		n=null;
+		str=null;
+		c=null;
+		sta=null;
+		z=null;
+		i=-99;
+		try {
+			response.sendRedirect("signin.html");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
 	
+	public double PriceToDouble(String price) {
+		String sub = "";
+		for(int i=1; i<price.length(); i++) {
+			sub+= price.charAt(i);
+		}
+		
+		double price2 = Double.parseDouble(sub);
+		return price2;
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register = request.getParameter("register");
 		String login = request.getParameter("loginbutton"); 
 		String editprofile = request.getParameter("editprofile");
 		String submitedit = request.getParameter("submitedit");
-		
+		String add = request.getParameter("addToCart");
+		String logout = request.getParameter("logout");
+
+		if(logout!=null) {
+			Logout(request, response);
+		}
+		if(add!=null) {
+			if(u != null && !u.equals("")) {
+				AddToCart(request, response);
+			}
+			else {
+				try {
+					response.sendRedirect("signin.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 		if(submitedit!=null) {
 			System.out.println("submitted edit profile");
 			SubmitEdit(request, response);

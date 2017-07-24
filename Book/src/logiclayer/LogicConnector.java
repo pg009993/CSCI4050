@@ -28,4 +28,12 @@ public class LogicConnector {
 		return conn.UpdateUser(u);
 	}
 	
+	public ResultSet ReturnBooks(String isbn) {
+		return conn.ReturnBooks(isbn);
+	}
+	
+	public int AddToCart(String query) {
+		return conn.AddToCart(query);
+	}
+	
 }

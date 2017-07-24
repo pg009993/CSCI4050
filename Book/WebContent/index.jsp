@@ -40,7 +40,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-top-left">
 					<ul>
 						<li><a href="signin.html"><span
+				
 								class="glyphicon glyphicon-user"> </span>Login</a></li>
+								
+								
 						<li><a href="register.html"><span
 								class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>
 					</ul>
@@ -171,16 +174,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="col-md-4 product simpleCart_shelfItem text-center">
 					<a><img src="images/p2.jpg" alt="" /></a>
 					<div class="mask"></div>
-					<a class="product_name"><%=rs.getString("title") %></a>
-					<p>
-						<a class="item_add" href="#"><i></i> <span class="item_price"><%=rs.getString("price")%></span></a>
-					</p>
-					<a class="product_name">Publisher: <%=rs.getString("publisher") %></a>
-					<a class="product_name">Author: <%=rs.getString("author") %></a>
-					<a class="product_name">In Stock: <%=rs.getInt("quantity") %></a>
-					<a class="product_name">ISBN: <%=rs.getString("ISBN") %></a>
-					<a class="product_name">Genre: <%=rs.getString("genre") %></a>
-					
+					<form action="BookServlet" method="post">
+						<a class="product_name"><%=rs.getString("title") %></a>
+						<p>
+							<a class="item_add" href="#"><i></i> <span class="item_price"><%=rs.getString("price")%></span></a>
+						</p>
+						<a class="product_name">Publisher: <%=rs.getString("publisher") %></a>
+						<a class="product_name">Author: <%=rs.getString("author") %></a> <a
+							class="product_name">In Stock: <%=rs.getInt("quantity") %></a> <a
+							class="product_name">ISBN: <%=rs.getString("ISBN") %></a> <a
+							class="product_name">Genre: <%=rs.getString("genre") %></a> 
+							<input name="isbn" type="hidden" value="<%=rs.getString("ISBN") %>">
+						<input name="title" type="hidden" value="<%=rs.getString("title") %>"> 
+						<input name="price" type="hidden" value="<%=rs.getString("price") %>">
+						<input type="submit" value="Add To Cart" name="addToCart">
+
+					</form>
 				</div>
 
 
@@ -189,7 +198,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-				
+
 				<%
 									}
 									%>

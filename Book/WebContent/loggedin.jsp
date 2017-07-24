@@ -39,7 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<div class="header-top-left">
 					<ul>
-						<li><font color="white">Welcome, ${username} </font></li>
+						<li><font color="white">Welcome, <%= request.getAttribute("username") %></font></li>
 						<li><form action="BookServlet"><button name="editprofile">Edit Profile</button></form></a></li>	
 						<li><form action="BookServlet"><button name="logout">Logout</button></form></a></li>
 					</ul>
