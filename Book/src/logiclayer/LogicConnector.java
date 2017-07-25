@@ -61,6 +61,10 @@ public class LogicConnector {
 		return conn.Delete(query);
 	}
 	
+	public ResultSet Suspended(String query) {
+		return conn.Suspended(query);
+	}
+	
 	public int UpdateQuantity(String query) {
 		return conn.UpdateQuantity(query);
 	}

@@ -54,6 +54,16 @@ public class SQLConnector {
 		return check;
 	}
 	
+	public ResultSet Suspended(String query) {
+		try {
+			results = statement.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
 	public void remove(int cartid) {
 		String query = "DELETE FROM cart WHERE cartid='" + cartid + "';";
 		try {

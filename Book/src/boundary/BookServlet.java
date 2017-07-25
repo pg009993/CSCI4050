@@ -157,12 +157,45 @@ public class BookServlet extends HttpServlet {
 		String templateName = "editprofile.ftl";
 		process.processTemplate(templateName, root, request, response);
 	}
+	
+	public boolean Suspended(String username) {
+		String query = "SELECT * FROM suspendedusers WHERE username='" + username + "';";
+		boolean suspended = false;
+		
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.Suspended(query);
+		
+		try {
+			while(rs.next()) {
+				String user = rs.getString("username");
+				if(user.equals(username)) {
+					suspended=true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return suspended;
+	}
 
 	public void LoginUser(HttpServletRequest request, HttpServletResponse response){
 		String password = request.getParameter("password");
 		String username = request.getParameter("username");
 		String newpass = addSalt(password);
-
+		
+		boolean suspend = Suspended(username);
+		
+		if(suspend) {
+			try {
+				response.sendRedirect("suspended.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
 		String query = "SELECT * FROM users;";
 		LogicConnector logic = new LogicConnector();
 		ResultSet rs = logic.Login(query);
@@ -214,6 +247,7 @@ public class BookServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		}
 	}
 
