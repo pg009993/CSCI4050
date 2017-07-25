@@ -53,9 +53,80 @@ public class SQLConnector {
 		}
 		return check;
 	}
-		
+	
+	public void remove(int cartid) {
+		String query = "DELETE FROM cart WHERE cartid='" + cartid + "';";
+		try {
+			Statement s = connection.createStatement();
+			check = s.executeUpdate(query);
+		}catch(Exception e){
+			System.out.println(e); 
+		}
+	}
+	
+	public ResultSet CheckCart(String query) {
+		try {
+			results = statement.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	public ResultSet CheckPromo(String query) {
+		try {
+			results = statement.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	public ResultSet Total(String query) {
+		try {
+			results = statement.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	
 		public int UpdateUser(User u) {
 			String query = "UPDATE users SET first_name='" + u.getFirst() + "', last_name='" + u.getLast() + "', email='" + u.getEmail() + "', password='" + u.getPassword() + "', phone='" + u.getNumber() + "', street='" + u.getStreet() + "', city='" + u.getCity() + "', state='" + u.getState() + "', zip='" + u.getZip() + "', gender='" + u.getGender() + "', DOB='" + u.getBirthday() + "' WHERE id=" + u.getId() + ";";
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int AddOrder(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int UpdateQuantity(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int Delete(String query) {
 			try {
 				Statement s = connection.createStatement();
 				check = s.executeUpdate(query);

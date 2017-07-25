@@ -36,4 +36,32 @@ public class LogicConnector {
 		return conn.AddToCart(query);
 	}
 	
+	public int AddOrder(String query) {
+		return conn.AddOrder(query);
+	}
+	
+	public void remove(int cartid) {
+		conn.remove(cartid);
+	}
+	
+	public ResultSet CheckCart(String query) {
+		return conn.CheckCart(query);
+	}
+
+	public ResultSet CheckPromo(String query) {
+		return conn.CheckPromo(query);
+	}
+	
+	public ResultSet Total(String query) {
+		return conn.Total(query);
+	}
+	
+	public int Delete(String query)
+	{
+		return conn.Delete(query);
+	}
+	
+	public int UpdateQuantity(String query) {
+		return conn.UpdateQuantity(query);
+	}
 }

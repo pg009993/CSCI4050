@@ -50,13 +50,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="header-right">
 					<div class="cart box_1">
-						<a href="checkout.html">
-							<h3>
-								<span class="simpleCart_total"> $0.00 </span> (<span
-									id="simpleCart_quantity" class="simpleCart_quantity"> 0
-								</span>)<img src="images/bag.png" alt="">
-							</h3>
-						</a>
+
 						<p>
 							<a href="javascript:;" class="simpleCart_empty">Empty cart</a>
 						</p>
@@ -161,7 +155,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											String url="jdbc:mysql://localhost:3306/ecommerce";
 											String username="root";
 											String password="paw22nvc3";
-											String query="select * from books";
+											String query="select * from books where quantity > 0";
 											Connection conn=DriverManager.getConnection(url,username,password);
 											Statement stmt=conn.createStatement();
 											ResultSet rs=stmt.executeQuery(query);

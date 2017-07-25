@@ -2,8 +2,10 @@ package boundary;
 
 
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import javax.servlet.ServletConfig;
@@ -31,7 +33,8 @@ public class BookServlet extends HttpServlet {
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor process;
 	private static String f, l, bd, g, e, u, p, n, str, c, sta, z;
-	private static int i;
+	private static int i, totalorders;
+	private static double t;
 
 	public BookServlet() {
 		super();
@@ -342,6 +345,7 @@ public class BookServlet extends HttpServlet {
 		sta=null;
 		z=null;
 		i=-99;
+		t=0.0;
 		try {
 			response.sendRedirect("signin.html");
 		} catch (IOException e) {
@@ -359,6 +363,163 @@ public class BookServlet extends HttpServlet {
 		double price2 = Double.parseDouble(sub);
 		return price2;
 	}
+	
+	public void RemoveFromCart(HttpServletRequest request, HttpServletResponse response) {
+		String c = request.getParameter("cartid");
+		int cartid = Integer.parseInt(c);
+		
+		LogicConnector logic = new LogicConnector();
+		logic.remove(cartid);
+		
+		double total = Total(request, response);
+		LoadCart(request, response, total);
+	}
+	
+	public double Total(HttpServletRequest request, HttpServletResponse response) {
+		String query = "SELECT * FROM cart WHERE username='" + u + "';";
+		Double total=0.0;
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.Total(query);
+		
+		try {
+			while(rs.next()) {
+				String price = rs.getString("price");
+				total+= PriceToDouble(price);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t=total;
+		return total;
+	}
+	
+	public void LoadCart(HttpServletRequest request, HttpServletResponse response, double total) {
+		//double total = Total(request, response);
+		request.setAttribute("username", u);
+		request.setAttribute("total", total);
+		t=total;
+		try {
+			request.getRequestDispatcher("cart.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean CheckCart(HttpServletRequest request, HttpServletResponse response) {
+		String query = "SELECT * FROM cart WHERE username='" + u + "';";
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.CheckCart(query);
+		int count=0;
+		
+		try {
+			while(rs.next()) {
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(count>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void Promo(HttpServletRequest request, HttpServletResponse response) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setRoundingMode(RoundingMode.CEILING);
+		double total = Total(request, response);
+		String code = request.getParameter("code");
+		String query = "SELECT percentage FROM promos WHERE code='" + code + "';";
+		
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.CheckPromo(query);
+		int p=1;
+		try {
+			while(rs.next()) {
+				p = rs.getInt("percentage");
+				System.out.println("PEE: " + p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(p!=1) {
+			double pee = (double)p;
+			double discount = (pee/100.00);
+			System.out.println("DISCOUNT: " + discount);
+			total-=(total*discount);
+		}
+		System.out.println("TOTAL: " + total);
+		String tot = df.format(total);
+		double tota = Double.parseDouble(tot);
+		t=tota;
+		LoadCart(request, response, t);
+	}
+	
+	public void SubmitOrder(HttpServletRequest request, HttpServletResponse response) {
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String number = request.getParameter("number");
+		String street = request.getParameter("street");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		String zip = request.getParameter("zip");
+		String card = request.getParameter("cardnumber");
+		String name=firstname + " " + lastname;
+				
+		String query = "SELECT * FROM cart WHERE username='" + u + "';";
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.CheckCart(query);
+		totalorders++;
+		try {
+			while(rs.next()) {
+				String isbn = rs.getString("ISBN");
+				String query2 = "INSERT into orders(orderid, isbn, name, phone, card, street, city, state, zip, username, date) values ('" + totalorders + "', '"+ isbn + "', '" + name + "', '" + number + "', '" + card + "', '" + street + "', '" + city + "', '" + state + "', '" + zip + "', '" + u + "', CURDATE());";
+				int check = logic.AddOrder(query2);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String query3 = "SELECT * FROM cart WHERE username='" + u + "';";
+		ResultSet result = logic.CheckCart(query3);
+		
+		try {
+			while(result.next()) {
+				String isbn = result.getString("ISBN");
+				String query5 = "UPDATE books SET quantity = quantity-1 WHERE ISBN = '" + isbn + "';";
+				logic.UpdateQuantity(query5);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		String query4 = "DELETE FROM cart WHERE username='" + u + "';";
+		int check = logic.Delete(query4);
+		
+		request.setAttribute("username", u);
+		try {
+			request.getRequestDispatcher("loggedin.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register = request.getParameter("register");
@@ -367,7 +528,35 @@ public class BookServlet extends HttpServlet {
 		String submitedit = request.getParameter("submitedit");
 		String add = request.getParameter("addToCart");
 		String logout = request.getParameter("logout");
-
+		String loadcart = request.getParameter("cartButton");
+		String remove = request.getParameter("removeFromCart");
+		String complete = request.getParameter("completeOrder");
+		String promo = request.getParameter("promoCode");
+		String submitOrder = request.getParameter("submitOrder");
+		
+		if(submitOrder!=null) {
+			SubmitOrder(request, response);
+		}
+		if(promo!=null) {
+			System.out.println("PROMO PRESSED");
+			Promo(request, response);
+		}
+		if(complete!=null) {
+			if(CheckCart(request, response)) {
+				response.sendRedirect("checkout.jsp");
+			}
+			else {
+				double total = Total(request, response);
+				LoadCart(request, response, total);
+			}
+		}
+		if(remove!=null) {
+			RemoveFromCart(request, response);
+		}
+		if(loadcart!=null) {
+			double total = Total(request, response);
+			LoadCart(request, response, total);
+		}
 		if(logout!=null) {
 			Logout(request, response);
 		}

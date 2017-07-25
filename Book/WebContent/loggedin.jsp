@@ -46,16 +46,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="header-right">
 					<div class="cart box_1">
-						<a href="checkout.html">
-							<h3>
-								<span class="simpleCart_total"> $0.00 </span> (<span
-									id="simpleCart_quantity" class="simpleCart_quantity"> 0
-								</span>)<img src="images/bag.png" alt="">
-							</h3>
-						</a>
-						<p>
-							<a href="javascript:;" class="simpleCart_empty">Empty cart</a>
-						</p>
+						<form action="BookServlet" method="post">
+						<input type="submit" value="Cart" name="cartButton"> 
+						</form>
 						<div class="clearfix"></div>
 					</div>
 				</div>
