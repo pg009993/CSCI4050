@@ -40,9 +40,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="header-right">
 						<div class="cart box_1">
-								
-							<p><a href="javascript:;" class="simpleCart_empty">Empty cart</a></p>
-							<div class="clearfix"> </div>
+						<div class="clearfix"> </div>
 						</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -62,7 +60,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		        <span class="icon-bar"></span>
 	        </button>
 				<div class="logo">
-					<h1><a href="index.html"><span>E</span> -Shop</a></h1>
+					<h1><a href="index.jsp"><span>E</span> -Shop</a></h1>
 				</div>
 	    </div>
 	    <!--/.navbar-header-->
@@ -73,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="dreamcrub">
 			   	 <ul class="breadcrumbs">
                     <li class="home">
-                       <a href="index.html" title="Go to Home Page">Home</a>&nbsp;
+                       <a href="index.jsp" title="Go to Home Page">Home</a>&nbsp;
                        <span>&gt;</span>
                     </li>
                     <li class="women">
@@ -81,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </li>
                 </ul>
                 <ul class="previous">
-                	<li><a href="index.html">Back to Previous Page</a></li>
+                	<li><a href="index.jsp">Back to Previous Page</a></li>
                 </ul>
                 <div class="clearfix"></div>
 			   </div>

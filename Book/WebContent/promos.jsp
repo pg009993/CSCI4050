@@ -50,21 +50,9 @@
   <li> <form action="BookServlet"><button name="logoutadmin">Logout</button></form></li>
       
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>Admin<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                    </li>
+                    
                 </ul>
             </li>
         </ul>
@@ -72,34 +60,34 @@
              <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
             <li class="active">
-                    <a href="AddAdmin.html"><i class="fa fa-fw fa-table"></i> Admins</a>
+                    <a href="AddAdmin.jsp"><i class="fa fa-fw fa-table"></i> Admins</a>
                 </li>
                 <li class="active">
-                    <a href="books.html"><i class="fa fa-fw fa-table"></i> Books</a>
+                    <a href="books.jsp"><i class="fa fa-fw fa-table"></i> Books</a>
                 </li>
                 <li class="active">
-                    <a href="AddBook.html"><i class="fa fa-fw fa-table"></i>Add Books</a>
+                    <a href="AddBook.jsp"><i class="fa fa-fw fa-table"></i>Add Books</a>
                 </li>
                 <li class="active">
-                    <a href="orders.html"><i class="fa fa-fw fa-table"></i> Orders</a>
+                    <a href="orders.jsp"><i class="fa fa-fw fa-table"></i> Orders</a>
                 </li>
                   <li class="active">
-                    <a href="EditOrder.html"><i class="fa fa-fw fa-table"></i>Edit Order</a>
+                    <a href="EditOrder.jsp"><i class="fa fa-fw fa-table"></i>Edit Order</a>
                 </li>
                  <li class="active">
-                    <a href="EODSR.html"><i class="fa fa-fw fa-table"></i> End of Day Sales Report</a>
+                    <a href="EODSR.jsp"><i class="fa fa-fw fa-table"></i> End of Day Sales Report</a>
                 </li>
                  <li class="active">
-                    <a href="EODLI.html"><i class="fa fa-fw fa-table"></i> End of Day Low Inventory Report</a>
+                    <a href="EODLI.jsp"><i class="fa fa-fw fa-table"></i> End of Day Low Inventory Report</a>
                 </li>
                 <li class="active">
-                    <a href="users.html"><i class="fa fa-fw fa-table"></i> Users</a>
+                    <a href="users.jsp"><i class="fa fa-fw fa-table"></i> Users</a>
                 </li>
                 <li class="active">
-                    <a href="promos.html"><i class="fa fa-fw fa-table"></i> Promos</a>
+                    <a href="promos.jsp"><i class="fa fa-fw fa-table"></i> Promos</a>
                 </li>
                 <li class="active">
-                    <a href="suspendedusers.html"><i class="fa fa-fw fa-table"></i> Suspended Users</a>
+                    <a href="suspendedusers.jsp"><i class="fa fa-fw fa-table"></i> Suspended Users</a>
                 </li>
             </ul>
         </div>

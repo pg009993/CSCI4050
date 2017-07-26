@@ -39,13 +39,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<div class="header-top-left">
 					<ul>
-						<li><a href="signin.html"><span
-				
-								class="glyphicon glyphicon-user"> </span>Login</a></li>
-								
-								
-						<li><a href="register.html"><span
-								class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>
+						<li><font color="white">Welcome, <%= request.getAttribute("username") %></font></li>
+						<li><form action="BookServlet"><button name="editprofile">Edit Profile</button></form></li>	
+						<li><form action="BookServlet"><button name="logout">Logout</button></form></li>
 					</ul>
 				</div>
 				<div class="header-right">

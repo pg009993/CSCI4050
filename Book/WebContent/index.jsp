@@ -93,7 +93,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</ul>
 						</li>
 
-						<li><a href="typography.html">TYPO</a></li>
 						<li><a href="contact.html">CONTACT</a></li>
 					</ul>
 				</div>
@@ -252,103 +251,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 
 	</div>
-	<div class="other-products">
-		<div class="container">
-			<h3 class="like text-center">Featured Collection</h3>
-			<ul id="flexiselDemo3">
-				<li><a href="single.html"><img src="images/l1.jpg"
-						class="img-responsive" alt="" /></a>
-					<div class="product liked-product simpleCart_shelfItem">
-						<a class="like_name" href="single.html">perfectly simple</a>
-						<p>
-							<a class="item_add" href="#"><i></i> <span
-								class=" item_price">$759</span></a>
-						</p>
-					</div></li>
-				<li><a href="single.html"><img src="images/l2.jpg"
-						class="img-responsive" alt="" /></a>
-					<div class="product liked-product simpleCart_shelfItem">
-						<a class="like_name" href="single.html">praising pain</a>
-						<p>
-							<a class="item_add" href="#"><i></i> <span
-								class=" item_price">$699</span></a>
-						</p>
-					</div></li>
-				<li><a href="single.html"><img src="images/l3.jpg"
-						class="img-responsive" alt="" /></a>
-					<div class="product liked-product simpleCart_shelfItem">
-						<a class="like_name" href="single.html">Neque porro</a>
-						<p>
-							<a class="item_add" href="#"><i></i> <span
-								class=" item_price">$329</span></a>
-						</p>
-					</div></li>
-				<li><a href="single.html"><img src="images/l4.jpg"
-						class="img-responsive" alt="" /></a>
-					<div class="product liked-product simpleCart_shelfItem">
-						<a class="like_name" href="single.html">equal blame</a>
-						<p>
-							<a class="item_add" href="#"><i></i> <span
-								class=" item_price">$499</span></a>
-						</p>
-					</div></li>
-				<li><a href="single.html"><img src="images/l5.jpg"
-						class="img-responsive" alt="" /></a>
-					<div class="product liked-product simpleCart_shelfItem">
-						<a class="like_name" href="single.html">perfectly simple</a>
-						<p>
-							<a class="item_add" href="#"><i></i> <span
-								class=" item_price">$649</span></a>
-						</p>
-					</div></li>
-			</ul>
-			<script type="text/javascript">
-					 $(window).load(function() {
-						$("#flexiselDemo3").flexisel({
-							visibleItems: 4,
-							animationSpeed: 1000,
-							autoPlay: true,
-							autoPlaySpeed: 3000,    		
-							pauseOnHover: true,
-							enableResponsiveBreakpoints: true,
-					    	responsiveBreakpoints: { 
-					    		portrait: { 
-					    			changePoint:480,
-					    			visibleItems: 1
-					    		}, 
-					    		landscape: { 
-					    			changePoint:640,
-					    			visibleItems: 2
-					    		},
-					    		tablet: { 
-					    			changePoint:768,
-					    			visibleItems: 3
-					    		}
-					    	}
-					    });
-					    
-					});
-				   </script>
-			<script type="text/javascript" src="js/jquery.flexisel.js"></script>
-		</div>
-	</div>
+
 	<!-- content-section-ends-here -->
-	<div class="news-letter">
-		<div class="container">
-			<div class="join">
-				<h6>JOIN OUR MAILING LIST</h6>
-				<div class="sub-left-right">
-					<form>
-						<input type="text"  name="email" value="Enter Your Email Here"
-							onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Enter Your Email Here';}" />
-						<input type="submit" value="SUBSCRIBE" name="subEmail"/>
-					</form>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		</div>
-	</div>
+	
 	<div class="footer">
 		<div class="container">
 			<div class="footer_top">

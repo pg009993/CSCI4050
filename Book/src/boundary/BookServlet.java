@@ -610,7 +610,7 @@ public class BookServlet extends HttpServlet {
 			while(result.next()) {
 				String isbn = result.getString("ISBN");
 				String t = result.getString("title");
-				message+= t + " ";
+				message+= t + " \n";
 				String query5 = "UPDATE books SET quantity = quantity-1 WHERE ISBN = '" + isbn + "';";
 				logic.UpdateQuantity(query5);
 			}
@@ -619,7 +619,7 @@ public class BookServlet extends HttpServlet {
 			e1.printStackTrace();
 		}
 		
-		message+="\n";
+		//message+="\n";
 		message+="Total: $" + t;
 		String recipient[] = {e};
 		EmailSender.sendMail("softengsummer2017@gmail.com", "SoftEngPassword", message, "Order Confirmation", recipient);
@@ -711,6 +711,7 @@ public class BookServlet extends HttpServlet {
 		String term = request.getParameter("searchfor");
 		String category = request.getParameter("searchtype");
 		
+		request.setAttribute("username", u);
 		request.setAttribute("searchfor", term);
 		request.setAttribute("searchtype", category);
 		try {
@@ -982,7 +983,7 @@ public class BookServlet extends HttpServlet {
 			while(rs.next()) {
 				String email = rs.getString("email");
 				String recipient[] = {email};
-				if(EmailSender.sendMail("softengsummer2017@gmail.com", "SoftEngPassword", promocode, "Promo Code", recipient)) {
+				if(EmailSender.sendMail("softengsummer2017@gmail.com", "SoftEngPassword", "New promo: " + promocode + ", " + percent + "% off!", "Promo Code", recipient)) {
 					try {
 						request.setAttribute("name", adminN);
 						response.sendRedirect("promos.jsp");
@@ -1006,11 +1007,6 @@ public class BookServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-
-		
-
-		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -1041,8 +1037,11 @@ public class BookServlet extends HttpServlet {
 		String adminlogin = request.getParameter("adminloginbutton");
 		String adminlogout = request.getParameter("logoutadmin");
 		String newPromo = request.getParameter("newPromo"); 
+		String openHome = request.getParameter("openHome");
 		
-		
+		if(openHome!=null) {
+			OpenLoggedIn(request, response);
+		}
 		if(newPromo != null){
 			NewPromo(request, response); 
 		}
