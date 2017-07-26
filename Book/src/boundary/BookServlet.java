@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 import javax.servlet.ServletConfig;
@@ -38,7 +35,6 @@ public class BookServlet extends HttpServlet {
 	private static String f, l, bd, g, e, u, p, n, str, c, sta, z;
 	private static String adminN, adminPa, adminPh, adminE;
 	private static int i, totalorders, vCode;
-	private static int conf=928;
 	private static double t;
 	private static User us;
 
@@ -562,7 +558,6 @@ public class BookServlet extends HttpServlet {
 	}
 	
 	public void SubmitOrder(HttpServletRequest request, HttpServletResponse response) {
-		String message = "";
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String number = request.getParameter("number");
@@ -591,26 +586,9 @@ public class BookServlet extends HttpServlet {
 		String query3 = "SELECT * FROM cart WHERE username='" + u + "';";
 		ResultSet result = logic.CheckCart(query3);
 		
-		message+= "Customer name: " + f + " " + l + "\n";
-		message+= "Confirmation number: " + conf + "\n";
-		message+= "Order ID: " + totalorders + "\n";
-		
-		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-		Date date = new Date();
-		String cur = df.format(date);
-		
-		message+= "Order Date: " + cur + "\n";
-		message+= "Shipping Address: " + street + " " + city + " " + state + " " + zip + "\n";
-		message+= "Items: ";
-		
-		conf++;
-		//customer name, confirmation number, orderid, order date, shipping address, items in order, total amount
-		
 		try {
 			while(result.next()) {
 				String isbn = result.getString("ISBN");
-				String t = result.getString("title");
-				message+= t + " ";
 				String query5 = "UPDATE books SET quantity = quantity-1 WHERE ISBN = '" + isbn + "';";
 				logic.UpdateQuantity(query5);
 			}
@@ -618,11 +596,6 @@ public class BookServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		message+="\n";
-		message+="Total: $" + t;
-		String recipient[] = {e};
-		EmailSender.sendMail("softengsummer2017@gmail.com", "SoftEngPassword", message, "Order Confirmation", recipient);
 		
 		String query4 = "DELETE FROM cart WHERE username='" + u + "';";
 		int check = logic.Delete(query4);
