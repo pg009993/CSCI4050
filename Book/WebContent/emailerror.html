@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Eshop a Flat E-Commerce Bootstrap Responsive Website Template | Register :: w3layouts</title>
+<title>Eshop Registration</title>
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
@@ -35,14 +35,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<div class="header-top-left">
 					<ul>
-						<li><font color="white">Welcome, ${username} </font></li>
-						<li><form action="BookServlet"><button name="editprofile">Edit Profile</button></form></a></li>	
-						<a href="signin.html"><span class="glyphicon glyphicon-user"> </span>Logout</a></li>
+						<li><a href="account.html"><span class="glyphicon glyphicon-user"> </span>Login</a></li>
+						<li><a href="register.html"><span class="glyphicon glyphicon-lock"> </span>Create an Account</a></li>			
 					</ul>
 				</div>
 				<div class="header-right">
 						<div class="cart box_1">
-							
+							<a href="checkout.html">
+								<h3> <span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)<img src="images/bag.png" alt=""></h3>
+							</a>	
 							<p><a href="javascript:;" class="simpleCart_empty">Empty cart</a></p>
 							<div class="clearfix"> </div>
 						</div>
@@ -79,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                        <span>&gt;</span>
                     </li>
                     <li class="women">
-                       Edit Profile
+                       Registration
                     </li>
                 </ul>
                 <ul class="previous">
@@ -109,20 +110,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				});
 			   </script>
 
-		<h2>Edit Profile</h2>
+		<h2>Registration</h2>
 		<div class="registration-grids">
 			<div class="reg-form">
 				<div class="reg">
 					 <p>Welcome, please enter the following details to continue.</p>
 					 <p>If you have previously registered with us, <a href="#">click here</a></p>
+					 
+					<b><font color="red" size="4"> Email invalid. Please try again.</font></b> <br />
+	
 					 <form action="BookServlet" method="post">
 						 <ul>
 							 <li class="text-info">First Name: </li>
-							 <li><input type="text" value="${firstname}" name="firstname"></li>
+							 <li><input type="text" value="" name="firstname" required></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Last Name: </li>
-							 <li><input type="text" value="${lastname}" name="lastname"></li>
+							 <li><input type="text" value="" name="lastname" required></li>
 						 </ul>	
 
 						<ul>
@@ -130,7 +134,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							<li> 
 								<select name="DOBMonth">
-								<option>Month</option>
+								<option> - Month - </option>
 								<option value="January">January</option>
 								<option value="Febuary">Febuary</option>
 								<option value="March">March</option>
@@ -145,7 +149,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<option value="December">December</option>
 							</select>
 							<select name="DOBDay">
-								<option>Day</option>
+								<option> - Day - </option>
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -179,7 +183,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<option value="31">31</option>
 							</select>
 							<select name="DOBYear">
-								<option>Year</option>
+								<option> - Year - </option>
 									<option value="1999">1999</option>
 									<option value="1998">1998</option>
 									<option value="1997">1997</option>
@@ -247,32 +251,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 						<ul>
 							 <li class="text-info">Email: </li>
-							 <li><input type="text" value="${email}" name="email"></li>
-						 </ul>			 
+							 <li><input type="text" value="" name="email" required></li>
+						 </ul>
+						<ul>
+							 <li class="text-info">Username: </li>
+							 <li><input type="text" value="" name="username" required></li>
+						 </ul>						 
 						 <ul>
-						 	<li class="text-info">Old Password: </li>
-						 	<li><input type="password" name="oldpass" id="oldpass"></li>
-						 </ul>			 			 
-						 <ul>
-							 <li class="text-info">New Password: </li>
-							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password"></li>
+							 <li class="text-info">Password: </li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password" id="password" required></li>
 							<div class="matchClass" id="nonMatch"></div>
 						 </ul>
 						 <ul>
-							 <li class="text-info"">Re-enter New Password:</li>
-							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2"></li>
+							 <li class="text-info"">Re-enter Password:</li>
+							 <li><input type="password" onchange="checkPassword(); value="" name="password2" id="password2" required></li>
 						 </ul>
 						 <ul>
 							 <li class="text-info">Mobile Number:</li>
-							 <li><input type="text" value="${phone}" name="number"></li>
+							 <li><input type="text" value="" name="number" required></li>
 						 </ul>		
 						 <ul>
 							 <li class="text-info">Street:</li>
-							 <li><input type="text" value="${street}" name="street"></li>
+							 <li><input type="text" value="" name="street" required></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">City:</li>
-							 <li><input type="text" value="${city}" name="city"></li>
+							 <li><input type="text" value="" name="city" required></li>
 						 </ul>	
 						  <ul>
 							 <li class="text-info">State:</li>
@@ -333,32 +337,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						 </ul>
 						  <ul>
 							 <li class="text-info">Zip: </li>
-							 <li><input type="text" value="${zip}" name="zip"></li>
+							 <li><input type="text" value="" name="zip" required></li>
 						 </ul>					
-						<script>
-						function updated(){
-						alert("Profile successfully updated");
-						}
-						</script>
-						  
-						 <input type="submit" value="EDIT PROFILE" name="submitedit" id="submit" onclick="updated()">
-						 			<button name="deleteaccount" value="DELETE MY ACCOUNT">DELETE MY ACCOUNT</button>
-			<button name="unsubscribe" value="UNSUBSCRIBE">UNSUBSCRIBE</button>
+						 <input type="submit" value="REGISTER NOW" name="register" id="submit">
 						 <p class="click">By clicking this button, you are agree to my  <a href="#">Policy Terms and Conditions.</a></p> 
 					 </form>
 				 </div>
 			</div>
-			
-			<script>
-			function del() {
-				alert("ACCOUNT DELETED");
-			}
-			</script>
-			
-			<form action="BookServlet" method="post"> 
-			<button name="deleteaccount" value="DELETE MY ACCOUNT" onclick="del()">DELETE MY ACCOUNT</button>
-			<button name="unsubscribe" value="UNSUBSCRIBE">UNSUBSCRIBE</button>
-			</form>
 			
 			<div class="clearfix"></div>
 		</div>
@@ -366,12 +351,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </div>
 <!-- registration-form -->
 
+		<div class="news-letter">
+			<div class="container">
+				<div class="join">
+					<h6>JOIN OUR MAILING LIST</h6>
+					<div class="sub-left-right">
+						<form>
+							<input type="text" value="Enter Your Email Here" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email Here';}" />
+							<input type="submit" value="SUBSCRIBE" />
+						</form>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
 		
 		  <div class="cards text-center">
 				<img src="images/cards.jpg" alt="" />
 		  </div>
 		  <div class="copyright text-center">
-				<p>© 2015 Eshop. All Rights Reserved | Design by   <a href="http://w3layouts.com">  W3layouts</a></p>
+				<p>Â© 2015 Eshop. All Rights Reserved | Design by   <a href="http://w3layouts.com">  W3layouts</a></p>
 		  </div>
 		</div>
 		</div>

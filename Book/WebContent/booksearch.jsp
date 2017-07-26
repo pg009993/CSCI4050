@@ -50,7 +50,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="header-right">
 					<div class="cart box_1">
-
+						<a href="checkout.html">
+							<h3>
+								<span class="simpleCart_total"> $0.00 </span> (<span
+									id="simpleCart_quantity" class="simpleCart_quantity"> 0
+								</span>)<img src="images/bag.png" alt="">
+							</h3>
+						</a>
 						<p>
 							<a href="javascript:;" class="simpleCart_empty">Empty cart</a>
 						</p>
@@ -102,47 +108,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!--/.navbar-->
 		</div>
 	</div>
-	
-
-	<div class="news-letter">
-			<div class="container">
-				<div class="join">
-					<h6>Looking for something? </h6>
-					<div class="sub-left-right">
-						
-		<form action="BookServlet" method="post">
-			<div>
+	<form action="BookServlet" method="post">
+		<div>
 			<span>Search:</span>
 			<input type="text"  name="searchfor"> 
+ 		</div>
+ 		<div>
  			<select name="searchtype">
  				<option value="author" selected >Author</option>
  				<option value="title">Title</option>
  				<option value="genre">Genre</option>
  			</select>
- 			</div>
- 		<div>
  		</div>
  		<input type="submit" value="Search" name="SearchBooks"> 
 	</form>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
-		</div>
-
-
-
-	
-	
-	
 	<img src="books.jpg" style="width: 1300px; height: 428px;">
-
-
-
-
-
-
-
 
 
 	<div class="banner-info">
@@ -192,10 +172,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											try
 											{
 											Class.forName("com.mysql.jdbc.Driver");
+											String SearchFor =  (String)request.getAttribute("searchfor");
+											String SearchType = (String)request.getAttribute("searchtype");
 											String url="jdbc:mysql://localhost:3306/ecommerce";
 											String username="root";
 											String password="paw22nvc3";
-											String query="select * from books where quantity > 0 order by title";
+											String query="select * from books where " + SearchType +" like '%" + SearchFor + "%'";
 											Connection conn=DriverManager.getConnection(url,username,password);
 											Statement stmt=conn.createStatement();
 											ResultSet rs=stmt.executeQuery(query);
@@ -339,10 +321,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<h6>JOIN OUR MAILING LIST</h6>
 				<div class="sub-left-right">
 					<form>
-						<input type="text"  name="email" value="Enter Your Email Here"
+						<input type="text" value="Enter Your Email Here"
 							onfocus="this.value = '';"
 							onblur="if (this.value == '') {this.value = 'Enter Your Email Here';}" />
-						<input type="submit" value="SUBSCRIBE" name="subEmail"/>
+						<input type="submit" value="SUBSCRIBE" />
 					</form>
 				</div>
 				<div class="clearfix"></div>

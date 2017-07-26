@@ -64,6 +64,26 @@ public class SQLConnector {
 		return results;
 	}
 	
+	public ResultSet checkEmail(String query) {
+		try {
+			results = statement.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	public int InsertSub(String query) {
+		try {
+			Statement s = connection.createStatement();
+			check = s.executeUpdate(query);
+		}catch(Exception e){
+			System.out.println(e); 
+		}
+		return check;
+	}
+	
 	public void remove(int cartid) {
 		String query = "DELETE FROM cart WHERE cartid='" + cartid + "';";
 		try {
@@ -115,8 +135,78 @@ public class SQLConnector {
 			}
 			return check;
 		}
+
+		public int InsertAdmin(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int Unsubscribe(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+
+		public int SuspendUser(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int RemoveUser(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int DeleteAccount(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int DeleteBook(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
 		
 		public int AddOrder(String query) {
+			try {
+				Statement s = connection.createStatement();
+				check = s.executeUpdate(query);
+			}catch(Exception e){
+				System.out.println(e); 
+			}
+			return check;
+		}
+		
+		public int AddBook(String query) {
 			try {
 				Statement s = connection.createStatement();
 				check = s.executeUpdate(query);

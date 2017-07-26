@@ -33,8 +33,10 @@ public class BookServlet extends HttpServlet {
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor process;
 	private static String f, l, bd, g, e, u, p, n, str, c, sta, z;
-	private static int i, totalorders;
+	private static String adminN, adminPa, adminPh, adminE;
+	private static int i, totalorders, vCode;
 	private static double t;
+	private static User us;
 
 	public BookServlet() {
 		super();
@@ -123,7 +125,6 @@ public class BookServlet extends HttpServlet {
 
 					User user = new User(f,l,e,p,n,str,c,sta,z,g,bd,u,i);
 					int check = logic.UpdateUser(user);
-					//conn.UpdateUser(f, l, e, p, n, str, c, sta, z, g, bd, i);
 					DefaultObjectWrapperBuilder df = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 					SimpleHash root = new SimpleHash(df.build());
 					root.put("username", u);
@@ -250,6 +251,13 @@ public class BookServlet extends HttpServlet {
 		}
 		}
 	}
+	
+	public void sendPromo(HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("title");
+		
+
+		
+	}
 
 	public void Register(HttpServletRequest request, HttpServletResponse response) {
 		String firstname = request.getParameter("firstname");
@@ -269,12 +277,46 @@ public class BookServlet extends HttpServlet {
 		String birthday = day + "-" + month + "-" + year;
 		String newpass = addSalt(password);
 		boolean unique = UniqueUsername(username);
+		
+		if(!unique) {
+			try {
+				response.sendRedirect("registererror.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
-		User u = new User(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
-
+		Random Rand = new Random();
+		vCode = Rand.nextInt(9999999);
+		//Send an email
+		String recipient[] = {email};
+		if(EmailSender.sendMail("softengsummer2017@gmail.com", "SoftEngPassword", Integer.toString(vCode), "Confirmation Code", recipient)) {
+			try {
+				response.sendRedirect("confirmCode.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				response.sendRedirect("emailerror.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		us = new User(firstname, lastname, email, newpass, number, street, city, state, zip, gender, birthday, username);
+	}
+	
+	public void RegisterDataBase(HttpServletRequest request, HttpServletResponse response) {
+		boolean unique = UniqueUsername(us.getUsername());
+		
 		if(unique) {
 			LogicConnector logic = new LogicConnector();
-			int check = logic.addUser(u);
+			int check = logic.addUser(us);
 			try {
 				response.sendRedirect("signin.html");
 			} catch (IOException e) {
@@ -290,7 +332,21 @@ public class BookServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
+	}
+	
+	public void Verify(HttpServletRequest request, HttpServletResponse response) {
+		String code = request.getParameter("code");
+		if(code.equals(Integer.toString(vCode))) {
+			RegisterDataBase(request, response);
+		}
+		else {
+			try {
+				response.sendRedirect("confirmCode.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public boolean UniqueUsername(String username) {
@@ -380,8 +436,9 @@ public class BookServlet extends HttpServlet {
 		z=null;
 		i=-99;
 		t=0.0;
+		vCode=0;
 		try {
-			response.sendRedirect("signin.html");
+			response.sendRedirect("index.jsp");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -518,7 +575,7 @@ public class BookServlet extends HttpServlet {
 		try {
 			while(rs.next()) {
 				String isbn = rs.getString("ISBN");
-				String query2 = "INSERT into orders(orderid, isbn, name, phone, card, street, city, state, zip, username, date) values ('" + totalorders + "', '"+ isbn + "', '" + name + "', '" + number + "', '" + card + "', '" + street + "', '" + city + "', '" + state + "', '" + zip + "', '" + u + "', CURDATE());";
+				String query2 = "INSERT into orders(orderid, isbn, name, phone, card, street, city, state, zip, username, date, price) values ('" + totalorders + "', '"+ isbn + "', '" + name + "', '" + number + "', '" + card + "', '" + street + "', '" + city + "', '" + state + "', '" + zip + "', '" + u + "', CURDATE(), '" + rs.getString("price") + "');";
 				int check = logic.AddOrder(query2);
 			}
 		} catch (SQLException e) {
@@ -554,7 +611,381 @@ public class BookServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	public void AddBook(HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("title"); 
+		String author = request.getParameter("author"); 
+		String pubs = request.getParameter("publisher"); 
+		String isbn = request.getParameter("ISBN"); 
+		String genre = request.getParameter("genre"); 
+		String desc = request.getParameter("description"); 
+		String price = request.getParameter("price"); 
+		String quantity = request.getParameter("quantity"); 
+		int q = Integer.parseInt(quantity);
 
+		
+		String query = "INSERT into books(title, author, publisher, ISBN, genre, description, price, quantity) values ('" + title + "', '"+ author + "', '"  + pubs + "', '" + isbn + "', '" + genre + "', '" + desc + "', '$" + price + "', '" + q + "');"; 
+		LogicConnector logic = new LogicConnector();
+		int y = logic.AddBook(query); 
+		try {
+			response.sendRedirect("books.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public void Subscribe(HttpServletRequest request, HttpServletResponse response) {
+		String email = request.getParameter("email");
+		String query = "SELECT * FROM users;";
+		boolean exists = false;
+		
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.checkEmail(query);
+		
+		try {
+			while(rs.next()) {
+				if(email.equals(rs.getString("email"))) {
+					exists = true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(exists) {
+			String query2 = "INSERT IGNORE INTO sub(email) VALUE ('" + email + "');";
+			logic.InsertSub(query2);
+			OpenLoggedIn(request, response);
+		}
+		else {
+			OpenLoggedIn(request, response);
+		}
+		
+	}
+
+	public void OpenLoggedIn(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("username", u);
+		try {
+			request.getRequestDispatcher("loggedin.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void Search(HttpServletRequest request, HttpServletResponse response) {
+		String term = request.getParameter("searchfor");
+		String category = request.getParameter("searchtype");
+		
+		request.setAttribute("searchfor", term);
+		request.setAttribute("searchtype", category);
+		try {
+			request.getRequestDispatcher("booksearch.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void RemoveBook(HttpServletRequest request, HttpServletResponse response) {
+		String isbn = request.getParameter("isbn");
+		
+		String query = "DELETE FROM books WHERE ISBN='" + isbn + "';";
+		LogicConnector logic = new LogicConnector();
+		int check = logic.DeleteBook(query);
+		
+		try {
+			response.sendRedirect("books.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void NewAdmin(HttpServletRequest request, HttpServletResponse response) {
+		String name = request.getParameter("name");
+		String number = request.getParameter("number");
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		String newpass = addSalt(password);
+		
+		String query = "INSERT INTO admins(name, phone, password, email) VALUES ('" + name + "', '" + number + "', '" + newpass + "', '" + email + "');";
+		LogicConnector logic = new LogicConnector();
+		int check = logic.InsertAdmin(query);
+		
+		try {
+			response.sendRedirect("AddAdmin.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void Unsubscribe(HttpServletRequest request, HttpServletResponse response) {
+		String query = "DELETE FROM sub WHERE email='" + e + "';";
+		
+		LogicConnector logic = new LogicConnector();
+		int check = logic.Unsubscribe(query);
+		
+		EditProfile(request, response);
+	}
+	
+	public void DeleteAccount(HttpServletRequest request, HttpServletResponse response) {
+		String query = "DELETE FROM users WHERE id='" + i + "';";
+		
+		LogicConnector logic = new LogicConnector();
+		int check = logic.DeleteAccount(query);
+		
+		Logout(request, response);
+	}
+	
+	public void SuspendUser(HttpServletRequest request, HttpServletResponse response) {
+		String username = request.getParameter("username");
+		
+		String query = "INSERT IGNORE INTO suspendedusers(username) VALUE ('" + username + "');";
+		
+		LogicConnector logic = new LogicConnector();
+		int check = logic.SuspendUser(query);
+		
+		try {
+			response.sendRedirect("suspendedusers.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void RemoveUser(HttpServletRequest request, HttpServletResponse response) {
+		String username = request.getParameter("username");
+		
+		String query = "DELETE FROM users WHERE username='" + username + "';";
+		
+		LogicConnector logic = new LogicConnector();
+		int check = logic.RemoveUser(query);
+		
+		String query2 = "DELETE FROM suspendedusers WHERE username='" + username + "';";
+		int c = logic.RemoveUser(query2);
+		
+		try {
+			response.sendRedirect("users.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void UnsuspendUser(HttpServletRequest request, HttpServletResponse response) {
+		String username = request.getParameter("username");
+		
+		String query = "DELETE FROM suspendedusers WHERE username='" + username + "';";
+		
+		LogicConnector logic = new LogicConnector();
+		int check = logic.RemoveUser(query);
+		
+		try {
+			response.sendRedirect("suspendedusers.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void EditBook(HttpServletRequest request, HttpServletResponse response) {
+		String isbn = request.getParameter("isbn");
+		String title = ""; 
+		String author = "";  
+		String pubs = ""; 
+		String genre = ""; 
+		String desc = ""; 
+		String price = ""; 
+		int quantity = 0; 
+		double p = 0.0;
+		String query = "SELECT * FROM books WHERE ISBN='" + isbn + "';";
+		
+		//its 4am im tired
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.CheckCart(query);
+
+		
+		try {
+			while(rs.next()){
+					title = rs.getString("title");
+					author = rs.getString("author");
+					pubs = rs.getString("publisher");
+					genre = rs.getString("genre");
+					desc = rs.getString("description");
+					price = rs.getString("price");
+					quantity = rs.getInt("quantity");
+					p = PriceToDouble(price);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		request.setAttribute("ISBN", isbn);
+		request.setAttribute("title", title);
+		request.setAttribute("publisher", pubs);
+		request.setAttribute("genre", genre);
+		request.setAttribute("description", desc);
+		request.setAttribute("price", p);
+		request.setAttribute("quantity", quantity);
+		request.setAttribute("author", author);
+		
+		try {
+			request.getRequestDispatcher("EditBook.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void EditThisBook(HttpServletRequest request, HttpServletResponse response) {
+		String title = request.getParameter("title"); 
+		String author = request.getParameter("author"); 
+		String pubs = request.getParameter("publisher"); 
+		String isbn = request.getParameter("ISBN"); 
+		String genre = request.getParameter("genre"); 
+		String desc = request.getParameter("description"); 
+		String price = request.getParameter("price"); 
+		String quantity = request.getParameter("quantity"); 
+		int q = Integer.parseInt(quantity);
+		
+		String query = "UPDATE books SET title='" + title + "', author='" + author + "', publisher='" + pubs + "', genre='" + genre + "', description='" + desc + "', price='$" + price + "', quantity='" + q + "' WHERE ISBN='" + isbn + "';";
+
+		LogicConnector logic = new LogicConnector();
+		int check = logic.AddToCart(query);
+		
+		try {
+			response.sendRedirect("books.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void AdminLogin(HttpServletRequest request, HttpServletResponse response) {
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		String newpass = addSalt(password);
+		
+		String query = "SELECT * FROM admins;";
+		LogicConnector logic = new LogicConnector();
+		ResultSet rs = logic.Login(query);
+
+		boolean found=false;
+
+		try {
+			while(rs.next()) {
+				String em = rs.getString("email");
+				String pass = rs.getString("password");
+				if(em.equals(email) && pass.equals(newpass)) {
+					found=true;
+					adminN=rs.getString("name");
+					adminE=rs.getString("email");
+					adminPh=rs.getString("phone");
+					adminPa = pass;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(found) {
+			try {
+				request.setAttribute("name", adminN);
+				response.sendRedirect("books.jsp");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				response.sendRedirect("signinerror.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void AdminLogout(HttpServletRequest request, HttpServletResponse response) {
+		adminN=null;
+		adminPa=null;
+		adminPh=null;
+		adminE=null;
+		
+		try {
+			response.sendRedirect("signin.html");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void NewPromo(HttpServletRequest request, HttpServletResponse response){
+		String promocode = request.getParameter("promocode");
+		String percent = request.getParameter("percentage"); 
+		int per = Integer.parseInt(percent);
+		
+		String query = "INSERT IGNORE INTO promos(percentage, code) VALUES ('" + per + "', '" + promocode + "');";
+		LogicConnector logic = new LogicConnector();
+		int check = logic.AddToCart(query);
+		
+		String query2 = "SELECT * FROM sub";
+		ResultSet rs = logic.checkEmail(query2);
+		
+		try {
+			while(rs.next()) {
+				String email = rs.getString("email");
+				String recipient[] = {email};
+				if(EmailSender.sendMail("softengsummer2017@gmail.com", "SoftEngPassword", promocode, "Promo Code", recipient)) {
+					try {
+						request.setAttribute("name", adminN);
+						response.sendRedirect("promos.jsp");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else {
+					try {
+						request.setAttribute("name", adminN);
+						response.sendRedirect("promos.jsp");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+
+		
+
+		
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register = request.getParameter("register");
 		String login = request.getParameter("loginbutton"); 
@@ -567,7 +998,72 @@ public class BookServlet extends HttpServlet {
 		String complete = request.getParameter("completeOrder");
 		String promo = request.getParameter("promoCode");
 		String submitOrder = request.getParameter("submitOrder");
+		String verify = request.getParameter("verifyButton");
+		String sub = request.getParameter("subEmail");
+		String search = request.getParameter("SearchBooks");
+		String booksAdd = request.getParameter("newBook"); 
+		String removeBook = request.getParameter("removeBook");
+		String newAdmin = request.getParameter("newAdmin");
+		String unsubscribe = request.getParameter("unsubscribe");
+		String deleteaccount = request.getParameter("deleteaccount");
+		String removeUser = request.getParameter("removeUser");
+		String suspendUser = request.getParameter("suspendUser");
+		String unsuspendUser = request.getParameter("unsuspendUser");
+		String editBook = request.getParameter("editBook");
+		String editThisBook = request.getParameter("editThisBook");
+		String adminlogin = request.getParameter("adminloginbutton");
+		String adminlogout = request.getParameter("logoutadmin");
+		String newPromo = request.getParameter("newPromo"); 
 		
+		
+		if(newPromo != null){
+			NewPromo(request, response); 
+		}
+		if(adminlogout!=null) {
+			AdminLogout(request, response);
+		}
+		if(adminlogin!=null) {
+			AdminLogin(request, response);
+		}
+		if(editThisBook!=null) {
+			EditThisBook(request, response);
+		}
+		if(editBook!=null) {
+			EditBook(request, response);
+		}
+		if(unsuspendUser!=null) {
+			UnsuspendUser(request, response);
+		}
+		if(suspendUser!=null) {
+			SuspendUser(request, response);
+		}
+		if(removeUser!=null) {
+			RemoveUser(request, response);
+		}
+		if(deleteaccount!=null) {
+			DeleteAccount(request, response);
+		}
+		if(unsubscribe!=null) {
+			Unsubscribe(request, response);
+		}
+		if(newAdmin!=null) {
+			NewAdmin(request, response);
+		}
+		if(removeBook!=null) {
+			RemoveBook(request, response);
+		}
+		if(search!=null) {
+			Search(request, response);
+		}
+		if(booksAdd != null){
+			AddBook(request, response); 
+		}
+		if(sub!=null) {
+			Subscribe(request, response);
+		}
+		if(verify!=null) {
+			Verify(request, response);
+		}
 		if(submitOrder!=null) {
 			SubmitOrder(request, response);
 		}

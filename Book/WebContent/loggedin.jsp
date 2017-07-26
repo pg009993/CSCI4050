@@ -294,10 +294,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<h6>JOIN OUR MAILING LIST</h6>
 				<div class="sub-left-right">
 					<form>
-						<input type="text" value="Enter Your Email Here"
+						<input type="text"  name="email" value="Enter Your Email Here"
 							onfocus="this.value = '';"
 							onblur="if (this.value == '') {this.value = 'Enter Your Email Here';}" />
-						<input type="submit" value="SUBSCRIBE" />
+						<input type="submit" value="SUBSCRIBE" name="subEmail"/>
 					</form>
 				</div>
 				<div class="clearfix"></div>
